@@ -1,0 +1,37 @@
+body{
+  background-color: lightgrey;
+}
+
+header{
+  background-color: #1b1b1b;
+  width:100%;
+}
+
+
+header h2{
+  color: white;
+  display: inline-block;
+  padding: 2em;
+  margin: 0;
+  padding-left: 3em;
+  padding-right: 3em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none; /* no underline */
+}
+
+#login, #cart{
+  float:right;
+}
+
+header h2:hover{
+  background-color: white;
+  color: black;
+}
+
+h1{
+  padding-left: 2em;
+  /*border: 2px solid;*/
+}

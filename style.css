@@ -12,6 +12,7 @@ header{
   width:100%;
 }
 
+
 header h2{
   color: white;
   display: inline-block;
@@ -19,6 +20,11 @@ header h2{
   margin: 0;
   padding-left: 3em;
   padding-right: 3em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none; /* no underline */
 }
 
 #login, #cart{
@@ -32,36 +38,62 @@ header h2:hover{
 
 h1{
   padding-left: 2em;
-  /*text-align: center;*/
-  border: 2px solid;
+  /*border: 2px solid;*/
 }
+
+
 
 .menu{
   position: relative;
   margin: auto;
-  width: 100%;
+}
+
+.title{
+  text-align: center;
+  font-size: 1.5em;
+  font-style: italic;
 }
 
 .item{
   display: inline-block;
+  text-align: center;
 }
+
 .button{
   text-align: center;
+  /*border: 2px solid;*/
+  position: relative;
+  border-radius: 10em;
+  float:inherit;
+  margin: auto;
+  width: 40%;
+  border: 1px solid;
   margin-bottom: 1em;
-  border: 2px solid;
 }
+
+.button a, .item a{
+  pointer-events: none;
+}
+
+.button:hover{
+  background-color: maroon;
+  color: white;
+  border: 1px solid;
+}
+
 
 img{
   height: 400px;
   width: 700px;
   padding: 2em;
-  border: 1px solid;
   border-radius: 10em;
+  margin: 0 1em 0 1em;
+  padding: 0;
 }
 
 
+
 footer{
-  margin: 0;
   margin-top: 2em;
   padding: 1em;
   background-color:black;
