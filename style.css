@@ -1,0 +1,71 @@
+/**{
+  border: 2px solid;
+  border-color:black;
+}*/
+
+body{
+  background-color: lightgrey;
+}
+
+header{
+  background-color: #1b1b1b;
+  width:100%;
+}
+
+header h2{
+  color: white;
+  display: inline-block;
+  padding: 2em;
+  margin: 0;
+  padding-left: 3em;
+  padding-right: 3em;
+}
+
+#login, #cart{
+  float:right;
+}
+
+header h2:hover{
+  background-color: white;
+  color: black;
+}
+
+h1{
+  padding-left: 2em;
+  /*text-align: center;*/
+  border: 2px solid;
+}
+
+.menu{
+  position: relative;
+  margin: auto;
+  width: 100%;
+}
+
+.item{
+  display: inline-block;
+}
+.button{
+  text-align: center;
+  margin-bottom: 1em;
+  border: 2px solid;
+}
+
+img{
+  height: 400px;
+  width: 700px;
+  padding: 2em;
+  border: 1px solid;
+  border-radius: 10em;
+}
+
+
+footer{
+  margin: 0;
+  margin-top: 2em;
+  padding: 1em;
+  background-color:black;
+  color: white;
+  height: 300px;
+  position:;
+}
