@@ -23,14 +23,69 @@
     <h1>Checkout</h1>
   </div>
 
+  <div id="checkout">
+
+    <h3>Select Form of Payment</h3>
+    <form>
+      <input type="radio" name="radAnswer"> Credit / Debit Card
+      <input type="radio" name="radAnswer"> Cash
+    </form>
+
+    <p>Credit / Debit Card Number</p>
+    <p><input type="credit card" style="width:376px"></p>
+
+    <table>
+      <tr>
+        <td>
+          <p>Expiration date</p>
+          <p><input type="month"></p>
+        </td>
+        <td>
+          <p>CV number</p>
+          <p><input maxlength="3"></p>
+        </td>
+      </tr>
+    </table>
+
+    <p>Name on Card</p>
+    <table>
+      <tr>
+        <td>
+          <p><input type="text" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" /></p>
+        </td>
+        <td>
+          <p><input type="text" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'" /></p>
+        </td>
+      </tr>
+    </table>
+
+    <p>Billing Address</p>
+    <p><input type="text" placeholder="Street" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Street'" style="width:531px"/></p>
+    <p><input type="text" placeholder="City" onfocus="this.placeholder = ''" onblur="this.placeholder = 'City'" />
+      <input type="text" maxlength="2" placeholder="State" onfocus="this.placeholder = ''" onblur="this.placeholder = 'State'" />
+      <input type="text"  maxlength="5" placeholder="Zipcode" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Zipcode'" /></p>
+
+    </br>
+    </br>
+
+    <p>Delivery Address</p>
+    <p><input type="text" placeholder="Street" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Street'" style="width:531px"/></p>
+    <p><input type="text" placeholder="City" onfocus="this.placeholder = ''" onblur="this.placeholder = 'City'" />
+      <input type="text" maxlength="2" placeholder="State" onfocus="this.placeholder = ''" onblur="this.placeholder = 'State'" />
+      <input type="text"  maxlength="5" placeholder="Zipcode" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Zipcode'" /></p>
+
+
+    <p>Delivery Comments</p>
+    <p><textarea rows="4" cols="50" style="margin: 0px; width: 527px; height: 152px;"></textarea></p>
+
+  </div>
 
   <div class="button">
     <button>
-      <a href="C:/Users/Kody/OneDrive/Documents/PortalProject2017/confirmation.html">Pay</a>
+      <!-- <a href="C:/Users/Kody/OneDrive/Documents/PortalProject2017/confirmation.html">Pay</a> -->
+      Pay
     </button>
   </div>
-
-
 
 
 <footer>

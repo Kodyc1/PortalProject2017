@@ -94,12 +94,18 @@ tfoot td{
   border-left: 1px solid;
 }
 
-.button{
+
+.coupon{
+  text-align: center;
   margin-top: 2em;
-  text-align: right;
-  width: 79%;
 }
 
+
+.button{
+  text-align: center;
+  /*width: 79%;*/
+  width: 100%;
+}
 
 button{
   padding: 1em;

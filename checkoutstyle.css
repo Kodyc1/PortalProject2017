@@ -47,11 +47,38 @@ h1{
 }
 
 .button{
-  margin-top: 2em;
-  text-align: right;
-  width: 79%;
+  /*text-align: right;
+  width: 79%;*/
+  text-align: center;
+  margin-bottom: 2em;
 }
 
+p{
+  padding-left: 2em;
+}
+
+h3{
+  padding-left: 2em;
+}
+
+form{
+    padding-left: 2em;
+    padding-bottom: 2em;
+}
+
+textarea{
+  resize:vertical;
+}
+
+#checkout{
+  padding: 2em;
+  padding-left: 2em;
+  background-color: beige;
+  border-radius: 10px;
+  width: 40%;
+  margin: 3em;
+  margin-bottom: 1em;
+}
 
 button{
   padding: 1em;
