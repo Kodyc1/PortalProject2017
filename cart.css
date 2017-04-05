@@ -82,7 +82,6 @@ tfoot td{
   border-color: lightblue;
 }
 
-
 .name{
   padding: 1em;
   text-align: left;
@@ -94,9 +93,6 @@ tfoot td{
   border-left: 1px solid;
 }
 
-.money{
-  border-left: 1px solid black;
-}
 
 
 img{
@@ -107,5 +103,4 @@ img{
 
 footer{
   height: 200px;
-
 }
