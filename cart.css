@@ -47,3 +47,14 @@ h1{
   padding-left: 2em;
   /*border: 2px solid;*/
 }
+
+table, tr, td{
+  text-align: center;
+  font-size: 1.3em;
+  border: 1px solid;
+}
+
+img{
+  height: 200px;
+  width: 300px;
+}
