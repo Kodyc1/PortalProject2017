@@ -1,3 +1,11 @@
+/**{
+  border: 1px solid;
+}*/
+
+*{
+  font-family: "Cambria";
+}
+
 body{
   background-color: lightgrey;
 }
@@ -7,14 +15,19 @@ header{
   width:100%;
 }
 
+ul{
+  margin: 0;
+  padding: 0;
+}
 
-header h2{
+header li{
   color: white;
   display: inline-block;
   padding: 2em;
   margin: 0;
   padding-left: 3em;
   padding-right: 3em;
+  font-size: 1.5em;
 }
 
 a {
@@ -22,16 +35,39 @@ a {
   text-decoration: none; /* no underline */
 }
 
+
 #login, #cart{
   float:right;
 }
 
-header h2:hover{
+
+header li:hover{
   background-color: white;
   color: black;
 }
 
 h1{
-  padding-left: 2em;
+  text-align: center;
+  width: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
   /*border: 2px solid;*/
+}
+
+.input{
+  text-align: center;
+  width: 100%;
+}
+
+button{
+  padding: 1em;
+}
+
+.button {
+  text-align: center;
+  padding: 1em;
+  position: relative;
+}
+.register{
+  text-align: center;
 }
