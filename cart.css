@@ -27,7 +27,6 @@ header li{
   font-size: 1.5em;
 }
 
-
 a {
   color: inherit;
   text-decoration: none; /* no underline */
@@ -45,32 +44,60 @@ header li:hover{
 h1{
   margin-top: 1em;
   padding-left: 2em;
-  /*border: 2px solid;*/
 }
 
 
-table, tr{
+table{
+  border-collapse: collapse;
+}
+
+table tr{
   text-align: center;
   font-size: 1.3em;
-  /*border: 1px solid;*/
   width: 100%;
-  padding: 0 3em 0 3em;
 }
+
+tbody tr{
+  border-top: 1px solid;
+}
+
 
 thead{
   background-color: tan;
+  border: 1px solid;
+  border-color: tan;
 }
 
 tbody td{
   vertical-align: top;
-  border: 1px solid;
   table-layout: fixed;
+  padding-bottom: 1em;
+  padding-top: 1em;
 }
 
 tfoot td{
   padding: 1em;
   background-color: lightblue;
+  border: 1px solid;
+  border-color: lightblue;
 }
+
+
+.name{
+  padding: 1em;
+  text-align: left;
+}
+
+.description{
+  padding: 1em;
+  border-right: 1px solid;
+  border-left: 1px solid;
+}
+
+.money{
+  border-left: 1px solid black;
+}
+
 
 img{
   height: 200px;
@@ -80,5 +107,5 @@ img{
 
 footer{
   height: 200px;
-  
+
 }
