@@ -80,6 +80,7 @@ tfoot td{
   background-color: lightblue;
   border: 1px solid;
   border-color: lightblue;
+  text-align: right;
 }
 
 .name{
@@ -93,7 +94,16 @@ tfoot td{
   border-left: 1px solid;
 }
 
+.button{
+  margin-top: 2em;
+  text-align: right;
+  width: 79%;
+}
 
+
+button{
+  padding: 1em;
+}
 
 img{
   height: 200px;
