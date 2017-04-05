@@ -70,13 +70,15 @@ h1{
 }
 
 button{
-  padding: 1em;
+  padding: 1em 3em 1em 3em;
 }
 
 .button {
   text-align: center;
-  padding: 1em;
   position: relative;
+  height: 20%;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 .register{
   text-align: center;
