@@ -6,6 +6,7 @@
 
   <link rel="stylesheet" type="text/css" href="style.css">
 
+
 <!-- cart -> login/prefill -> checkout -->
 
 </head>
@@ -15,9 +16,9 @@
   <!-- Navbar -->
   <header>
     <ul>
-      <a href="C:/Users/Kody/OneDrive/Documents/PortalProject2017/index.html"><li id="home">Home</li></a>
-      <a href="C:/Users/Kody/OneDrive/Documents/PortalProject2017/cart.html"><li id="cart">Cart</li></a>
-      <a href="C:/Users/Kody/OneDrive/Documents/PortalProject2017/login.html"><li id="login">Login/Register</li></a>
+      <a href="index.html"><li id="home">Home</li></a>
+      <a href="cart.html"><li id="cart">Cart (0)</li></a>
+      <a href="login.html"><li id="login">Login/Register</li></a>
     </ul>
   </header>
 
@@ -25,72 +26,126 @@
     <h1>Menu</h1>
   </div>
 
+
   <div class="menu">
 
-    <table align="center">
+    <table id="table" align="center">
 
       <tr>
         <td>
-          <div class="title">
-            <p>Bibimbap</p>
-          </div>
-          <div class="item">
-            <a href="#">
-              <img src="Pics/bibimbap.jpg">
-            </a>
-          </div>
-          <div class="button">
-            <p><a href="">Add to cart</a></p>
-          </div>
+            <div class="modal" id="modal1">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Details</h2>
+              </div>
+              <div class="modal-body">
+                <p>Ingredients: Rice, Spinach, Beef, Egg, Carrots, Bean Sprouts</p>
+                <p>Price: $<span class="price">100</span></p>
+              </div>
+              <div class="modal-footer">
+
+                <button class="button">Add to Cart</button>
+
+              </div>
+            </div>
+            <!-- <div class="title">
+              <p>Bibimbap</p>
+            </div>
+            <div class="item">
+              <img class='image' id="1" src="Pics/bibimbap.jpg">
+            </div>
+          <button class="button">Add to cart</button> -->
+
+
         </td>
 
         <td>
-          <div class="title">
-            <p>Bibimbap</p>
+
+
+            <div class="modal" id="modal2">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Details</h2>
+              </div>
+              <div class="modal-body">
+                <p>Ingredients: Beef</p>
+                <p id="bibim-price">Price: $200</p>
+              </div>
+              <div class="modal-footer">
+                <button class="button">Add to Cart</button>
+              </div>
+            </div>
+
+          <!-- <div class="title">
+            <p>Steak</p>
           </div>
           <div class="item">
-            <a href="#">
-              <img src="Pics/bibimbap.jpg">
-            </a>
+              <img class="image" id="2" src="Pics/steak.jpg">
           </div>
-          <div class="button">
-            <p><a href="">Add to cart</a></p>
-          </div>
+          <button class="button">Add to cart</button> -->
+
+
         </td>
       </tr>
 
+
       <tr>
         <td>
-          <div class="title">
-            <p>Bibimbap</p>
+
+          <div class="modal" id="modal3">
+            <div class="modal-header">
+              <span class="close">&times;</span>
+              <h2>Details</h2>
+            </div>
+            <div class="modal-body">
+              <p>Ingredients: Pork, Rice, Egg, Green Onion</p>
+              <p id="bibim-price">Price: $10</p>
+            </div>
+            <div class="modal-footer">
+              <button class="button">Add to Cart</button>
+            </div>
+          </div>
+
+          <!-- <div class="title">
+            <p>Katsudon</p>
           </div>
           <div class="item">
-            <a href="#">
-              <img src="Pics/bibimbap.jpg">
-            </a>
+              <img class="image" id="3" src="Pics/katsudon.jpeg">
           </div>
-          <div class="button">
-            <p><a href="">Add to cart</a></p>
-          </div>
+
+          <button class="button">Add to cart</button> -->
+
         </td>
 
         <td>
-          <div class="title">
-            <p>Bibimbap</p>
+
+          <div class="modal" id="modal4">
+            <div class="modal-header">
+              <span class="close">&times;</span>
+              <h2>Details</h2>
+            </div>
+            <div class="modal-body">
+              <p>Ingredients: Sugar, Chocolate, Egg</p>
+              <p id="bibim-price">Price: $70</p>
+            </div>
+            <div class="modal-footer">
+              <button class="button">Add to Cart</button>
+            </div>
+          </div>
+
+          <!-- <div class="title">
+            <p>Brownie</p>
           </div>
           <div class="item">
-            <a href="#">
-              <img src="Pics/bibimbap.jpg">
-            </a>
+              <img class="image" id="4" src="Pics/brownie.jpg">
           </div>
-          <div class="button">
-            <p><a href="">Add to cart</a></p>
-          </div>
+
+          <button class="button">Add to cart</button> -->
+
         </td>
       </tr>
 
     </table>
-
   </div>
 
 
@@ -98,6 +153,137 @@
     <p>Contact</p>
 
   </footer>
+
+
+  <script>
+
+    var titles =["Bibimbap", "Steak", "Katsudon", "Brownie"]
+
+    var food = ["Pics/bibimbap.jpg", "Pics/steak.jpg", "Pics/katsudon.jpeg", "Pics/brownie.jpg"];
+
+
+    var table = document.getElementById("table");
+
+    arr = [];
+    arr.push(table.rows[0].cells[0],
+             table.rows[0].cells[1],
+             table.rows[1].cells[0],
+             table.rows[1].cells[1]);
+    console.log(arr);
+
+    for (var i = 0; i < 4; i++){
+
+      // console.log(arr[i]);
+
+      var title = document.createElement('div');
+      title.className="title";
+
+      var para = document.createElement("p");
+      var text = document.createTextNode(titles[i]);
+      para.appendChild(text);
+      title.appendChild(para);
+
+      arr[i].appendChild(title);
+
+      var div = document.createElement('div');
+      div.className="item";
+
+      arr[i].appendChild(div);
+
+      var img = document.createElement('img');
+      img.setAttribute("id", i+1);
+      img.src = food[i];
+
+      document.getElementsByClassName("item")[i].appendChild(img);
+
+      var button = document.createElement('button');
+      button.className="button";
+      var add = document.createTextNode("Add to Cart");
+      button.appendChild(add);
+
+      arr[i].appendChild(button);
+
+    }
+
+
+    var modal1 = document.getElementById('modal1');
+    var modal2 = document.getElementById('modal2');
+    var modal3 = document.getElementById('modal3');
+    var modal4 = document.getElementById('modal4');
+
+    var a = document.getElementById("1");
+    var b = document.getElementById("2");
+    var c = document.getElementById("3");
+    var d = document.getElementById("4");
+
+    a.onclick = function(){
+      modal1.style.display="block";
+    }
+    b.onclick = function(){
+      modal2.style.display="block";
+    }
+    c.onclick = function(){
+      modal3.style.display="block";
+    }
+    d.onclick = function(){
+      modal4.style.display="block";
+    }
+
+
+    document.querySelectorAll('close').forEach(
+      function(obj){
+        obj.addEventListener('click',
+          function(){
+            console.log("Hello");
+            modal1.style.display = "none";
+          }
+        )
+      }
+    );
+
+
+    var span = document.getElementsByClassName("close");
+
+    for(var i = 0; i < 4; i++){
+      span[i].onclick = function() {
+          modal1.style.display = "none";
+          modal2.style.display = "none";
+          modal3.style.display = "none";
+          modal4.style.display = "none";
+      }
+      window.onclick = function(event) {
+        if (event.target == modal1) {
+          modal1.style.display = "none";
+        }
+        if (event.target == modal2) {
+          modal2.style.display = "none";
+        }
+        if (event.target == modal3) {
+          modal3.style.display = "none";
+        }
+        if (event.target == modal4) {
+          modal4.style.display = "none";
+        }
+      }
+    }
+
+    var cartNumber = 0;
+    var cart = document.querySelector('#cart');
+
+
+    document.querySelectorAll("button").forEach(
+      function(obj){
+        obj.addEventListener('click',
+          function(){
+            cartNumber++;
+            cart.innerHTML = "Cart (" + cartNumber + ")";
+          }
+        )
+      }
+    );
+
+  </script>
+
 
 </body>
 </html>
