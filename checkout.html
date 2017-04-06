@@ -60,19 +60,19 @@
     </table>
 
     <p>Billing Address</p>
-    <p><input type="text" placeholder="Street" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Street'" style="width:531px"/></p>
-    <p><input type="text" placeholder="City" onfocus="this.placeholder = ''" onblur="this.placeholder = 'City'" />
-      <input type="text" maxlength="2" placeholder="State" onfocus="this.placeholder = ''" onblur="this.placeholder = 'State'" />
-      <input type="text"  maxlength="5" placeholder="Zipcode" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Zipcode'" /></p>
+    <p><input type="bstreet" placeholder="Street" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Street'" style="width:531px"/></p>
+    <p><input type="bcity" placeholder="City" onfocus="this.placeholder = ''" onblur="this.placeholder = 'City'" />
+      <input type="bstate" maxlength="2" placeholder="State" onfocus="this.placeholder = ''" onblur="this.placeholder = 'State'" />
+      <input type="bzip"  maxlength="5" placeholder="Zipcode" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Zipcode'" /></p>
 
     </br>
     </br>
 
     <p>Delivery Address</p>
-    <p><input type="text" placeholder="Street" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Street'" style="width:531px"/></p>
-    <p><input type="text" placeholder="City" onfocus="this.placeholder = ''" onblur="this.placeholder = 'City'" />
-      <input type="text" maxlength="2" placeholder="State" onfocus="this.placeholder = ''" onblur="this.placeholder = 'State'" />
-      <input type="text"  maxlength="5" placeholder="Zipcode" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Zipcode'" /></p>
+    <p><input type="dstreet" placeholder="Street" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Street'" style="width:531px"/></p>
+    <p><input type="dcity" placeholder="City" onfocus="this.placeholder = ''" onblur="this.placeholder = 'City'" />
+      <input type="dstate" maxlength="2" placeholder="State" onfocus="this.placeholder = ''" onblur="this.placeholder = 'State'" />
+      <input type="dzip"  maxlength="5" placeholder="Zipcode" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Zipcode'" /></p>
 
 
     <p>Delivery Comments</p>
@@ -100,28 +100,46 @@
     var first = document.querySelector('input[name="first"]').value;
     var last = document.querySelector('input[name="last"]').value;
 
+    var bstreet = document.querySelector('input[type="bstreet"]').value;
+    var bcity = document.querySelector('input[type="bcity"]').value;
+    var bstate = document.querySelector('input[type="bstate"]').value;
+    var bzip = document.querySelector('input[type="bzip"]').value;
+
+    var dstreet = document.querySelector('input[type="dstreet"]').value;
+    var dcity = document.querySelector('input[type="dcity"]').value;
+    var dstate = document.querySelector('input[type="dstate"]').value;
+    var dzip = document.querySelector('input[type="dzip"]').value;
 
     if (payment_type == "") {
         alert("Select payment type");
         return false;
     }
     if (payment_type==="cc"){
-      if (Number.isInteger(parseInt(credit_card)) && (credit_card.length == 16 || credit_card.length == 15)){
-        console.log("hello");
+      if (!Number.isInteger(parseInt(credit_card)) || !(credit_card.length == 16 || credit_card.length == 15)){
+        alert("invalid credit_card");
+        return false;
       }
-      if (Number.isInteger(parseInt(cv)) && cv.length == 3){
-        console.log("good");
+      if (!Number.isInteger(parseInt(cv)) || !(cv.length == 3)){
+        alert("invalid cv number");
+        return false;
       }
       if (exp==""){
-        console.log("bad");
+        alert("invalid expiration date");
+        return false;
+      }
+      if (bstreet=="" || bcity == "" || bstate == "" || bzip == ""){
+        alert("invalid billing address");
+        return false;
       }
     }
     if (first == "" || last == ""){
-      console.log("WHAT'S YOUR NAME?");
+      alert("please enter first and last name");
+      return false;
     }
-    console.log(payment_type);
-    // console.log(exp);
-    // console.log(credit_card);
+    if (dstreet=="" || dcity == "" || dstate == "" || dzip == ""){
+      alert("invalid delivery address");
+      return false;
+    }
   }
 
 </script>
