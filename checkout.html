@@ -26,9 +26,9 @@
   <div id="checkout">
 
     <h3>Select Form of Payment</h3>
-    <form>
-      <input type="radio" name="radAnswer"> Credit / Debit Card
-      <input type="radio" name="radAnswer"> Cash
+    <form name="payment">
+      <input type="radio" name="type" value="cc"> Credit / Debit Card
+      <input type="radio" name="type" value="ca"> Cash
     </form>
 
     <p>Credit / Debit Card Number</p>
@@ -42,19 +42,19 @@
         </td>
         <td>
           <p>CV number</p>
-          <p><input maxlength="3"></p>
+          <p><input maxlength="3" type="cv"></p>
         </td>
       </tr>
     </table>
 
-    <p>Name on Card</p>
+    <p>Name</p>
     <table>
       <tr>
         <td>
-          <p><input type="text" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" /></p>
+          <p><input name="first" type="text" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" /></p>
         </td>
         <td>
-          <p><input type="text" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'" /></p>
+          <p><input name="last" type="text" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'" /></p>
         </td>
       </tr>
     </table>
@@ -81,7 +81,7 @@
   </div>
 
   <div class="button">
-    <button>
+    <button onclick="validateForm()">
       <!-- <a href="C:/Users/Kody/OneDrive/Documents/PortalProject2017/confirmation.html">Pay</a> -->
       Pay
     </button>
@@ -90,6 +90,41 @@
 
 <footer>
 </footer>
+
+<script>
+  function validateForm() {
+    var payment_type = document.forms["payment"]["type"].value;
+    var credit_card = document.querySelector('input[type="credit card"]').value;
+    var exp = document.querySelector('input[type="month"]').value;
+    var cv = document.querySelector('input[type="cv"]').value;
+    var first = document.querySelector('input[name="first"]').value;
+    var last = document.querySelector('input[name="last"]').value;
+
+
+    if (payment_type == "") {
+        alert("Select payment type");
+        return false;
+    }
+    if (payment_type==="cc"){
+      if (Number.isInteger(parseInt(credit_card)) && (credit_card.length == 16 || credit_card.length == 15)){
+        console.log("hello");
+      }
+      if (Number.isInteger(parseInt(cv)) && cv.length == 3){
+        console.log("good");
+      }
+      if (exp==""){
+        console.log("bad");
+      }
+    }
+    if (first == "" || last == ""){
+      console.log("WHAT'S YOUR NAME?");
+    }
+    console.log(payment_type);
+    // console.log(exp);
+    // console.log(credit_card);
+  }
+
+</script>
 
 </body>
 </html>

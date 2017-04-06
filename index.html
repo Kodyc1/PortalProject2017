@@ -44,7 +44,7 @@
               </div>
               <div class="modal-footer">
 
-                <button class="button">Add to Cart</button>
+                <button class="button" id="button1">Add to Cart</button>
 
               </div>
             </div>
@@ -72,7 +72,7 @@
                 <p id="bibim-price">Price: $200</p>
               </div>
               <div class="modal-footer">
-                <button class="button">Add to Cart</button>
+                <button class="button" id="button2">Add to Cart</button>
               </div>
             </div>
 
@@ -102,7 +102,7 @@
               <p id="bibim-price">Price: $10</p>
             </div>
             <div class="modal-footer">
-              <button class="button">Add to Cart</button>
+              <button class="button" id="button3">Add to Cart</button>
             </div>
           </div>
 
@@ -129,7 +129,7 @@
               <p id="bibim-price">Price: $70</p>
             </div>
             <div class="modal-footer">
-              <button class="button">Add to Cart</button>
+              <button class="button" id="button4">Add to Cart</button>
             </div>
           </div>
 
@@ -198,6 +198,7 @@
 
       var button = document.createElement('button');
       button.className="button";
+      button.setAttribute("id", "button" + (i + 1));
       var add = document.createTextNode("Add to Cart");
       button.appendChild(add);
 
@@ -268,6 +269,10 @@
     }
 
     var cartNumber = 0;
+    var first = 0;
+    var second = 0;
+    var third = 0;
+    var fourth = 0;
     var cart = document.querySelector('#cart');
 
 
@@ -275,6 +280,15 @@
       function(obj){
         obj.addEventListener('click',
           function(){
+            if (obj.id === "button1"){
+              first++;
+            } else if (obj.id === "button2"){
+              second++;
+              } else if (obj.id === 'button3'){
+              third++;
+            } else if (obj.id === 'button4'){
+              fourth++;
+            }
             cartNumber++;
             cart.innerHTML = "Cart (" + cartNumber + ")";
           }
