@@ -36,103 +36,7 @@
 
     <div class="menu">
         <table id="table" align="center">
-            <tr>
 
-                <td>
-                    <div class="modal" id="modal1">
-                        <div class="modal-header">
-                            <span class="close">&times;</span>
-                            <h2>Details</h2>
-                        </div>
-                        <div class="modal-body">
-                            <p>Ingredients: Rice, Spinach, Beef, Egg, Carrots, Bean Sprouts</p>
-                            <p>Price: $<span class="price">15</span></p>
-                        </div>
-                        <div class="modal-footer">
-
-                            <button class="button" id="button1">Add to Cart</button>
-
-                        </div>
-                    </div>
-                    <!-- <div class="title">
-              <p>Bibimbap</p>
-            </div>
-            <div class="item">
-              <img class='image' id="1" src="Pics/bibimbap.jpg">
-            </div>
-          <button class="button">Add to cart</button> -->
-                </td>
-                <td>
-                    <div class="modal" id="modal2">
-                        <div class="modal-header">
-                            <span class="close">&times;</span>
-                            <h2>Details</h2>
-                        </div>
-                        <div class="modal-body">
-                            <p>Ingredients: Beef</p>
-                            <p id="bibim-price">Price: $20</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="button" id="button2">Add to Cart</button>
-                        </div>
-                    </div>
-                    <!-- <div class="title">
-            <p>Steak</p>
-          </div>
-          <div class="item">
-              <img class="image" id="2" src="Pics/steak.jpg">
-          </div>
-          <button class="button">Add to cart</button> -->
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <div class="modal" id="modal3">
-                        <div class="modal-header">
-                            <span class="close">&times;</span>
-                            <h2>Details</h2>
-                        </div>
-                        <div class="modal-body">
-                            <p>Ingredients: Pork, Rice, Egg, Green Onion</p>
-                            <p id="bibim-price">Price: $10</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="button" id="button3">Add to Cart</button>
-                        </div>
-                    </div>
-                    <!-- <div class="title">
-            <p>Katsudon</p>
-          </div>
-          <div class="item">
-              <img class="image" id="3" src="Pics/katsudon.jpeg">
-          </div>
-          <button class="button">Add to cart</button> -->
-                </td>
-                <td>
-                    <div class="modal" id="modal4">
-                        <div class="modal-header">
-                            <span class="close">&times;</span>
-                            <h2>Details</h2>
-                        </div>
-                        <div class="modal-body">
-                            <p>Ingredients: Sugar, Chocolate, Egg</p>
-                            <p id="bibim-price">Price: $5</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="button" id="button4">Add to Cart</button>
-                        </div>
-                    </div>
-                    <!-- <div class="title">
-            <p>Brownie</p>
-          </div>
-          <div class="item">
-              <img class="image" id="4" src="Pics/brownie.jpg">
-          </div>
-
-          <button class="button">Add to cart</button> -->
-                </td>
-            </tr>
         </table>
     </div>
 
@@ -150,21 +54,66 @@
         var table = document.getElementById("table");
 
         arr = [];
-        arr.push(table.rows[0].cells[0],
-            table.rows[0].cells[1],
-            table.rows[1].cells[0],
-            table.rows[1].cells[1]);
-        console.log(arr);
 
-        for (var i = 0; i < 4; i++) {
 
-            // console.log(arr[i]);
+        var menu = [
+          {
+            "title": "Bibimbap",
+            "img": "Pics/bibimbap.jpg",
+            "price": 15,
+            "ingredients": "Ingredients: Rice, Spinach, Beef, Egg, Carrots, Bean Sprouts",
+            "quantity": 0
+          },
+          {
+            "title": "Steak",
+            "img": "Pics/steak.jpg",
+            "price": 20,
+            "ingredients": "Ingredients: Beef",
+            "quantity": 0
+          },
+          {
+            "title": "Katsudon",
+            "img": "Pics/katsudon.jpeg",
+            "price": 10,
+            "ingredients": "Ingredients: Pork, Rice, Egg, Green Onion",
+            "quantity": 0
+          },
+          {
+            "title": "Brownie",
+            "img": "Pics/brownie.jpg",
+            "price": 5,
+            "ingredients": "Ingredients: Sugar, Chocolate, Egg",
+            "quantity": 0
+          },
+          // {
+          //   "title": "fifth",
+          //   "img": "Pics/brownie.jpg"
+          // }
+        ];
+
+        array = [];
+
+        for(var i =0; i < Math.ceil(menu.length/2); i++){
+          array[i] = document.createElement("tr");
+          var data1 = document.createElement("td");
+          var data2 = document.createElement("td");
+          array[i].appendChild(data1);
+          array[i].appendChild(data2);
+          table.appendChild(array[i]);
+        }
+        console.log(table);
+
+
+
+        for (var i = 0; i < menu.length; i++) {
+
+            arr.push(table.rows[Math.floor(i/2)].cells[i%2]);
 
             var title = document.createElement('div');
             title.className = "title";
 
             var para = document.createElement("p");
-            var text = document.createTextNode(titles[i]);
+            var text = document.createTextNode(menu[i]["title"]);
             para.appendChild(text);
             title.appendChild(para);
 
@@ -177,16 +126,10 @@
 
             var img = document.createElement('img');
             img.setAttribute("id", i + 1);
-            img.src = food[i];
+            img.src = menu[i]["img"];
 
             document.getElementsByClassName("item")[i].appendChild(img);
-            //
-            // var remove = document.createElement('button');
-            // remove.className = "remove";
-            // remove.setAttribute('id', 'remove' + (i+1));
-            // var rem = document.createTextNode('Remove from cart');
-            // remove.appendChild(rem);
-            // arr[i].appendChild(remove);
+
 
             var button = document.createElement('button');
             button.className = "button";
@@ -199,66 +142,66 @@
         }
 
 
-        var modal1 = document.getElementById('modal1');
-        var modal2 = document.getElementById('modal2');
-        var modal3 = document.getElementById('modal3');
-        var modal4 = document.getElementById('modal4');
-
-        var a = document.getElementById("1");
-        var b = document.getElementById("2");
-        var c = document.getElementById("3");
-        var d = document.getElementById("4");
-
-        a.onclick = function() {
-            modal1.style.display = "block";
-        }
-        b.onclick = function() {
-            modal2.style.display = "block";
-        }
-        c.onclick = function() {
-            modal3.style.display = "block";
-        }
-        d.onclick = function() {
-            modal4.style.display = "block";
-        }
-
-
-        document.querySelectorAll('close').forEach(
-            function(obj) {
-                obj.addEventListener('click',
-                    function() {
-                        console.log("Hello");
-                        modal1.style.display = "none";
-                    }
-                )
-            }
-        );
-
-
-        var span = document.getElementsByClassName("close");
-
-        for (var i = 0; i < 4; i++) {
-            span[i].onclick = function() {
-                modal1.style.display = "none";
-                modal2.style.display = "none";
-                modal3.style.display = "none";
-                modal4.style.display = "none";
-            }
-            window.onclick = function(event) {
-                if (event.target == modal1) {
-                    modal1.style.display = "none";
-                }
-                if (event.target == modal2) {
-                    modal2.style.display = "none";
-                }
-                if (event.target == modal3) {
-                    modal3.style.display = "none";
-                }
-                if (event.target == modal4) {
-                    modal4.style.display = "none";
-                }
-            }
-        }
+        // var modal1 = document.getElementById('modal1');
+        // var modal2 = document.getElementById('modal2');
+        // var modal3 = document.getElementById('modal3');
+        // var modal4 = document.getElementById('modal4');
+        //
+        // var a = document.getElementById("1");
+        // var b = document.getElementById("2");
+        // var c = document.getElementById("3");
+        // var d = document.getElementById("4");
+        //
+        // a.onclick = function() {
+        //     modal1.style.display = "block";
+        // }
+        // b.onclick = function() {
+        //     modal2.style.display = "block";
+        // }
+        // c.onclick = function() {
+        //     modal3.style.display = "block";
+        // }
+        // d.onclick = function() {
+        //     modal4.style.display = "block";
+        // }
+        //
+        //
+        // document.querySelectorAll('close').forEach(
+        //     function(obj) {
+        //         obj.addEventListener('click',
+        //             function() {
+        //                 console.log("Hello");
+        //                 modal1.style.display = "none";
+        //             }
+        //         )
+        //     }
+        // );
+        //
+        //
+        // var span = document.getElementsByClassName("close");
+        //
+        // for (var i = 0; i < 4; i++) {
+        //     span[i].onclick = function() {
+        //         modal1.style.display = "none";
+        //         modal2.style.display = "none";
+        //         modal3.style.display = "none";
+        //         modal4.style.display = "none";
+        //     }
+        //     window.onclick = function(event) {
+        //         if (event.target == modal1) {
+        //             modal1.style.display = "none";
+        //         }
+        //         if (event.target == modal2) {
+        //             modal2.style.display = "none";
+        //         }
+        //         if (event.target == modal3) {
+        //             modal3.style.display = "none";
+        //         }
+        //         if (event.target == modal4) {
+        //             modal4.style.display = "none";
+        //         }
+        //     }
+        // }
 
         var cartNumber = 0;
         var first = 0;
@@ -293,32 +236,6 @@
                 )
             }
         );
-        //
-        // document.querySelectorAll("remove").forEach(
-        //     function(obj) {
-        //         obj.addEventListener('click',
-        //             function() {
-        //                 if (obj.id === "remove1") {
-        //                     first--;
-        //                 } else if (obj.id === "remove2") {
-        //                     second--;
-        //                 } else if (obj.id === 'remove3') {
-        //                     third--;
-        //                 } else if (obj.id === 'remove4') {
-        //                     fourth--;
-        //                 }
-        //                 cartNumber--;
-        //                 localStorage.setItem('cartNumber', cartNumber);
-        //                 localStorage.setItem("first", first);
-        //                 localStorage.setItem("second", second);
-        //                 localStorage.setItem("third", third);
-        //                 localStorage.setItem("fourth", fourth);
-        //
-        //                 cart.innerHTML = "Cart (" + cartNumber + ")";
-        //             }
-        //         )
-        //     }
-        // );
 
 
 
