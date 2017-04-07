@@ -35,41 +35,28 @@
     </thead>
 
     <tbody>
-      <tr>
-        <td class="image"><img src="Pics/katsudon.jpeg"></td>
-        <td class="name">Katsudon</td>
-        <td>1</td>
-        <td>$300.00</td>
-        <td style="font-size:0.7em;color:blue"><a href="#">Edit/Delete</a></td>
+      <tr id="bi">
       </tr>
-      <tr>
-        <td class="image"><img src="Pics/katsudon.jpeg"></td>
-        <td class="name">Katsudon</td>
-        <td></td>
-        <td>$300.00</td>
-        <td style="font-size:0.7em;color:blue"><a href="#">Edit/Delete</a></td>
+
+      <tr id="s">
       </tr>
-      <tr>
-        <td class="image"><img src="Pics/katsudon.jpeg"></td>
-        <td class="name">Katsudon</td>
-        <td></td>
-        <td>$300.00</td>
-        <td style="font-size:0.7em;color:blue"><a href="#">Edit/Delete</a></td>
+
+      <tr id="k">
+      </tr>
+
+      <tr id="br">
       </tr>
     </tbody>
 
     <tfoot>
-      <tr>
+      <tr id="subtotal">
         <td colspan=3>Subtotal</td>
-        <td >$900.00</td>
       </tr>
-      <tr>
+      <tr id="tax">
         <td colspan=3>Tax</td>
-        <td >$100.00</td>
       </tr>
-      <tr>
+      <tr id="total">
         <td colspan=3>Total</td>
-        <td >$1000.00</td>
       </tr>
     </tfoot>
   </table>
@@ -88,6 +75,180 @@
   <footer>
   </footer>
 
+<script>
+
+  var titles = ["Bibimbap", "Steak", "Katsudon", "Brownie"]
+
+  var food = ["Pics/bibimbap.jpg", "Pics/steak.jpg", "Pics/katsudon.jpeg", "Pics/brownie.jpg"];
+
+  var prices = [15, 20, 10, 5];
+
+  var first = localStorage.getItem('first');
+  var second = localStorage.getItem('second');
+  var third = localStorage.getItem('third');
+  var fourth = localStorage.getItem('fourth');
+
+  var one = prices[0]*first;
+  var two = prices[1]*second;
+  var three = prices[2]*third;
+  var four = prices[3]*fourth;
+
+
+  var cart = document.querySelector('#cart');
+
+  var cartNumber = localStorage.getItem('cartNumber');
+
+
+  console.log(first);
+  console.log(second);
+  console.log(third);
+  console.log(fourth);
+
+  cart.innerHTML = "Cart (" + cartNumber + ")";
+
+
+  var brow = document.querySelector('#bi');
+  var srow = document.querySelector("#s");
+  var krow = document.querySelector("#k");
+  var brrow = document.querySelector("#br");
+
+
+
+  if (first != 0){
+    var bibimbap = document.createElement("td");
+    bibimbap.className = "image";
+
+    var img = document.createElement('img');
+    img.setAttribute("id", 1);
+    img.src = food[0];
+
+    bibimbap.appendChild(img);
+
+    var title = document.createElement("td");
+    title.className = "title";
+    title.innerHTML = titles[0];
+
+    var quantity = document.createElement("td");
+    quantity.innerHTML = first;
+
+    var cost = document.createElement("td");
+    cost.innerHTML = '$' + one + ".00";
+
+    var decrease = document.createElement("td");
+
+    brow.appendChild(bibimbap);
+    brow.appendChild(title);
+    brow.appendChild(quantity);
+    brow.appendChild(cost);
+    brow.appendChild(decrease);
+  }
+  if (second != 0){
+    var image = document.createElement("td");
+    image.className = "image";
+
+    var img = document.createElement('img');
+    img.setAttribute("id", 2);
+    img.src = food[1];
+
+    image.appendChild(img);
+
+    var title = document.createElement("td");
+    title.className = "title";
+    title.innerHTML = titles[1];
+
+    var quantity = document.createElement("td");
+    quantity.innerHTML = second;
+
+    var cost = document.createElement("td");
+    cost.innerHTML = '$' + two + ".00";
+
+    var decrease = document.createElement("td");
+
+    srow.appendChild(image);
+    srow.appendChild(title);
+    srow.appendChild(quantity);
+    srow.appendChild(cost);
+    srow.appendChild(decrease);
+  }
+  if (third != 0){
+    var bibimbap = document.createElement("td");
+    bibimbap.className = "image";
+
+    var img = document.createElement('img');
+    img.setAttribute("id", 1);
+    img.src = food[2];
+
+    bibimbap.appendChild(img);
+
+    var title = document.createElement("td");
+    title.className = "title";
+    title.innerHTML = titles[2];
+
+    var quantity = document.createElement("td");
+    quantity.innerHTML = third;
+
+    var cost = document.createElement("td");
+    cost.innerHTML = '$' + three + ".00";
+
+    var decrease = document.createElement("td");
+
+    krow.appendChild(bibimbap);
+    krow.appendChild(title);
+    krow.appendChild(quantity);
+    krow.appendChild(cost);
+    krow.appendChild(decrease);
+  }
+  if (fourth != 0){
+    var image = document.createElement("td");
+    image.className = "image";
+
+    var img = document.createElement('img');
+    img.setAttribute("id", 4);
+    img.src = food[3];
+
+    image.appendChild(img);
+
+    var title = document.createElement("td");
+    title.className = "title";
+    title.innerHTML = titles[3];
+
+    var quantity = document.createElement("td");
+    quantity.innerHTML = fourth;
+
+    var cost = document.createElement("td");
+    cost.innerHTML = '$' + four + ".00";
+
+
+    var decrease = document.createElement("td");
+
+    brrow.appendChild(image);
+    brrow.appendChild(title);
+    brrow.appendChild(quantity);
+    brrow.appendChild(cost);
+    brrow.appendChild(decrease);
+  }
+
+  var subtotal = document.querySelector("#subtotal");
+  var sub = document.createElement("td");
+  var number = (one + two + three + four);
+  sub.innerHTML = "$" + (number) + ".00";
+  subtotal.appendChild(sub);
+
+  var tax = document.querySelector("#tax");
+  var t = document.createElement("td");
+  var tnumber = Math.round(.0725*(one + two + three + four)*100)/100;
+  t.innerHTML = "$" + tnumber;
+  tax.appendChild(t);
+
+  var total = document.querySelector("#total");
+  var tot = document.createElement("td");
+  tot.innerHTML = "$" + (number + tnumber);
+  total.appendChild(tot);
+
+
+
+
+</script>
 
 </body>
 </html>

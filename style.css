@@ -154,7 +154,7 @@ h1{
 
 
 img{
-  /*cursor: pointer;*/
+  cursor: pointer;
   height: 400px;
   width: 700px;
   padding: 2em;
