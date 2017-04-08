@@ -1,6 +1,3 @@
-/**{
-  border: 1px solid;
-}*/
 
 *{
   font-family: "Cambria";
@@ -31,7 +28,6 @@ header li{
   font-size: 1.5em;
 }
 
-
 a {
   color: inherit;
   text-decoration: none; /* no underline */
@@ -52,21 +48,19 @@ h1{
   /*border: 2px solid;*/
 }
 
-
-.menu{
-  position: relative;
-  margin: auto;
-}
-
 .title{
   text-align: center;
   font-size: 1.5em;
   font-style: italic;
 }
 
-.item{
-  display: inline-block;
+.menu-container{
   text-align: center;
+}
+
+.menu-item{
+  display:inline-block;
+  width: 800px;
 }
 
 
@@ -75,7 +69,6 @@ h1{
   /*border: 2px solid;*/
   position: relative;
   border-radius: 10em;
-  margin-left: 17em;
   width: 40%;
   border: 1px solid;
   margin-bottom: 1em;
@@ -88,55 +81,42 @@ h1{
   border: 1px solid;
 }
 
-
 .button {
   cursor: pointer;
 }
-#modal1{
-  display: none;
 
-}
-#modal2{
-  display: none;
 
-}
-#modal3{
-  display: none;
-
-}
-#modal4{
-  display: none;
-}
-.modal{
-  position: fixed;
-  z-index: 1;
-  left: 0;
+.modalContainer{
+  display:none;
+  position:fixed;
+  background-color: rgba(0,0,0,0.4);
   top: 0;
+  left: 0;
+  padding: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
+  z-index: 1;
 }
 
 .modal-header{
   background-color:#f44336;
   padding: 10px 20px 10px 20px;
   width: 40%; /* Could be more or less, depending on screen size */
-  margin-left: 25%;
+  margin-left: 30%;
   margin-top: 15%;
 }
 .modal-body{
   background-color: lightgrey;
   padding: 40px 20px 40px 20px;
   width: 40%; /* Could be more or less, depending on screen size */
-  margin-left: 25%;
+  margin-left: 30%;
 }
 .modal-footer{
   background-color:#f44336;
   padding: 10px 20px 10px 20px;
   width: 40%; /* Could be more or less, depending on screen size */
-  margin-left: 25%;
+  height: 60px;
+  margin-left: 30%;
 }
 
 .close {
@@ -145,8 +125,7 @@ h1{
     font-size: 1em;
 }
 
-.close:hover,
-.close:focus {
+.close:hover, .close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;

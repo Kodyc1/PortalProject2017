@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
     <title>Food Ordering Website</title>
 
     <link rel="stylesheet" type="text/css" href="style.css">
 
-
-    <!-- cart -> login/prefill -> checkout -->
-
+    <script src="https://code.jquery.com/jquery-3.2.0.js"></script>
 </head>
 
 <body>
+
+    <!-- Modal -->
+    <div class="modalContainer">
+      <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2>Details</h2>
+      </div>
+      <div class="modal-body">
+        <div id = "ingredients"></div>
+        <div id = "price"></div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+
 
     <!-- Navbar -->
     <header>
@@ -29,207 +40,114 @@
         </ul>
     </header>
 
+    <!-- Title -->
     <div>
         <h1>Menu</h1>
     </div>
 
-
-    <div class="menu">
-        <table id="table" align="center">
-
-        </table>
+    <!-- Menu -->
+    <div class="menu-container">
+      <div class="menu">
+      </div>
     </div>
 
+    <!-- Footer -->
     <footer>
         <p>Contact</p>
     </footer>
 
-
+    <!-- Javascript -->
     <script>
-        var titles = ["Bibimbap", "Steak", "Katsudon", "Brownie"]
 
-        var food = ["Pics/bibimbap.jpg", "Pics/steak.jpg", "Pics/katsudon.jpeg", "Pics/brownie.jpg"];
+        $.ajax({
+          url: "http://thiman.me:1337/menu/kody",
+          type: "GET",
+          success:(function(e){
+            menu = e;
 
+            // Select menu Container
+            var menuContainer = $('.menu-container');
 
-        var table = document.getElementById("table");
+            // Create button
+            var button = $('<button/>').addClass("button").html("Add to Cart");
 
-        arr = [];
+            // Loop through menu in database
+            for (var i = 0; i < menu.length; i++){
 
+                var item = menu[i];
 
-        var menu = [
-          {
-            "title": "Bibimbap",
-            "img": "Pics/bibimbap.jpg",
-            "price": 15,
-            "ingredients": "Ingredients: Rice, Spinach, Beef, Egg, Carrots, Bean Sprouts",
-            "quantity": 0
-          },
-          {
-            "title": "Steak",
-            "img": "Pics/steak.jpg",
-            "price": 20,
-            "ingredients": "Ingredients: Beef",
-            "quantity": 0
-          },
-          {
-            "title": "Katsudon",
-            "img": "Pics/katsudon.jpeg",
-            "price": 10,
-            "ingredients": "Ingredients: Pork, Rice, Egg, Green Onion",
-            "quantity": 0
-          },
-          {
-            "title": "Brownie",
-            "img": "Pics/brownie.jpg",
-            "price": 5,
-            "ingredients": "Ingredients: Sugar, Chocolate, Egg",
-            "quantity": 0
-          },
-          // {
-          //   "title": "fifth",
-          //   "img": "Pics/brownie.jpg"
-          // }
-        ];
+                // Create menu item with title and menu id
+                var container = $('<div/>').addClass('menu-item');
 
-        array = [];
+                var title = $('<div/>').addClass('title').html(item.title);
+                var itemEle = $('<div/>')
+                              .addClass('item')
+                              .attr("id", `menu-${i}`);
 
-        for(var i =0; i < Math.ceil(menu.length/2); i++){
-          array[i] = document.createElement("tr");
-          var data1 = document.createElement("td");
-          var data2 = document.createElement("td");
-          array[i].appendChild(data1);
-          array[i].appendChild(data2);
-          table.appendChild(array[i]);
-        }
-        console.log(table);
+                // insert image
+                var image = $('<img/>').attr("src", item.img).attr("id", i);
+                itemEle.append(image);
+
+                container.append(title).append(itemEle).append(button.clone());
+
+                menuContainer.append(container);
+            }
+
+            // Create modal
+            var modalContainer = $('.modalContainer');
+
+            $('.menu-item .item img').on('click', function(e){
+              // get index of item
+              var index = parseInt($(this).attr("id"));
+              var item = menu[index];
+
+              console.log(item.ingredients);
+              console.log(item.price);
+
+              $("#ingredients").html(`Ingredients: ${item.ingredients}`);
+              $("#price").html(`Price: \$${item.price}`);
+
+              modalContainer.css("display","block");
+            })
+
+          })
+        });
 
 
-
-        for (var i = 0; i < menu.length; i++) {
-
-            arr.push(table.rows[Math.floor(i/2)].cells[i%2]);
-
-            var title = document.createElement('div');
-            title.className = "title";
-
-            var para = document.createElement("p");
-            var text = document.createTextNode(menu[i]["title"]);
-            para.appendChild(text);
-            title.appendChild(para);
-
-            arr[i].appendChild(title);
-
-            var div = document.createElement('div');
-            div.className = "item";
-
-            arr[i].appendChild(div);
-
-            var img = document.createElement('img');
-            img.setAttribute("id", i + 1);
-            img.src = menu[i]["img"];
-
-            document.getElementsByClassName("item")[i].appendChild(img);
+        // EVENT DELEGATION
 
 
-            var button = document.createElement('button');
-            button.className = "button";
-            button.setAttribute("id", "button" + (i + 1));
-            var add = document.createTextNode("Add to Cart");
-            button.appendChild(add);
-
-            arr[i].appendChild(button);
-
-        }
-
-
-        // var modal1 = document.getElementById('modal1');
-        // var modal2 = document.getElementById('modal2');
-        // var modal3 = document.getElementById('modal3');
-        // var modal4 = document.getElementById('modal4');
+        // var button = $(".button");
+        // button.on('click', ".button", function(e){
+        //   console.log('helo');
+        // });
         //
-        // var a = document.getElementById("1");
-        // var b = document.getElementById("2");
-        // var c = document.getElementById("3");
-        // var d = document.getElementById("4");
+        // var modal = $('.modalContainer');
         //
-        // a.onclick = function() {
-        //     modal1.style.display = "block";
-        // }
-        // b.onclick = function() {
-        //     modal2.style.display = "block";
-        // }
-        // c.onclick = function() {
-        //     modal3.style.display = "block";
-        // }
-        // d.onclick = function() {
-        //     modal4.style.display = "block";
-        // }
+        // $(window).on('click', function(event){
+        //   var element = $(this);
+        //   console.log(element);
+        //   if (event.target == modal) {
+        //       console.log("hello");
+        //       modal.css("display","none");
+        //   }
+        // });
         //
-        //
-        // document.querySelectorAll('close').forEach(
-        //     function(obj) {
-        //         obj.addEventListener('click',
-        //             function() {
-        //                 console.log("Hello");
-        //                 modal1.style.display = "none";
-        //             }
-        //         )
-        //     }
-        // );
-        //
-        //
-        // var span = document.getElementsByClassName("close");
-        //
-        // for (var i = 0; i < 4; i++) {
-        //     span[i].onclick = function() {
-        //         modal1.style.display = "none";
-        //         modal2.style.display = "none";
-        //         modal3.style.display = "none";
-        //         modal4.style.display = "none";
-        //     }
-        //     window.onclick = function(event) {
-        //         if (event.target == modal1) {
-        //             modal1.style.display = "none";
-        //         }
-        //         if (event.target == modal2) {
-        //             modal2.style.display = "none";
-        //         }
-        //         if (event.target == modal3) {
-        //             modal3.style.display = "none";
-        //         }
-        //         if (event.target == modal4) {
-        //             modal4.style.display = "none";
-        //         }
+        // window.onclick = function(event) {
+        //     if (event.target == modal) {
+        //         console.log("hello");
+        //         modal.style.display = "none";
         //     }
         // }
-
-        var cartNumber = 0;
-        var first = 0;
-        var second = 0;
-        var third = 0;
-        var fourth = 0;
-        var cart = document.querySelector('#cart');
+        //
 
 
         document.querySelectorAll("button").forEach(
             function(obj) {
                 obj.addEventListener('click',
                     function() {
-                        if (obj.id === "button1") {
-                            first++;
-                        } else if (obj.id === "button2") {
-                            second++;
-                        } else if (obj.id === 'button3') {
-                            third++;
-                        } else if (obj.id === 'button4') {
-                            fourth++;
-                        }
+
                         cartNumber++;
-                        localStorage.setItem('cartNumber', cartNumber);
-                        localStorage.setItem("first", first);
-                        localStorage.setItem("second", second);
-                        localStorage.setItem("third", third);
-                        localStorage.setItem("fourth", fourth);
 
                         cart.innerHTML = "Cart (" + cartNumber + ")";
                     }
@@ -238,10 +156,7 @@
         );
 
 
-
     </script>
 
-
 </body>
-
 </html>
