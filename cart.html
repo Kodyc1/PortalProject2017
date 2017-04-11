@@ -75,48 +75,49 @@
       for (var i = 0; i < menu.length; i++){
           console.log(menu);
 
-          if (menu[i]["quantity"] === 0){
-            var row = document.createElement("tr")
+          //if (menu[i]["quantity"] === 0){
+          var row = document.createElement("tr")
 
-            var image = document.createElement("td");
-            image.className = "image";
+          var image = document.createElement("td");
+          image.className = "image";
 
-            var img = document.createElement('img');
-            img.setAttribute("id", 1);
-            img.src = menu[i]["img"];
+          var img = document.createElement('img');
+          img.src = menu[i]["img"];
 
-            image.appendChild(img);
+          image.appendChild(img);
 
-            var title = document.createElement("td");
-            title.className = "title";
-            title.innerHTML = menu[i]["title"];
+          var title = document.createElement("td");
+          title.className = "title";
+          title.innerHTML = menu[i]["title"];
 
-            var quantity = document.createElement("td");
-            quantity.innerHTML = menu[i]["quantity"];
+          var quantity = document.createElement("td");
+          quantity.innerHTML = menu[i]["quantity"];
 
-            var cost = document.createElement("td");
-            cost.innerHTML = '$' + (menu[i]["quantity"] * menu[i]["price"]) + ".00";
+          var cost = document.createElement("td");
+          cost.innerHTML = '$' + (menu[i]["quantity"] * menu[i]["price"]) + ".00";
 
-            var decrease = document.createElement("td");
-            var button = $('<button/>').addClass("button").addClass("button" + i).html("Delete");
-            decrease.append(button);
+          var decrease = document.createElement("td");
+          var id = 0;
+          var button = $('<button/>').addClass("button").addClass("button" + i).html("Delete");
+          decrease.append(button);
 
-            row.append(image);
-            row.append(title);
-            row.append(quantity);
-            row.append(cost);
-            row.append(decrease);
+          row.append(image);
+          row.append(title);
+          row.append(quantity);
+          row.append(cost);
+          row.append(decrease);
 
-            cart.append(row);
-          }
+          cart.append(row);
+          //}
       }
 
       var subtotal = document.querySelector("#subtotal");
       var sub = document.createElement("td");
-      var number;
+      var number = 0;
       for (var i = 0; i < menu.length; i++){
-        number += menu[i]["price"] * menu[i]["quantity"]
+        number += parseInt(menu[i]["price"]) * parseInt(menu[i]["quantity"]);
       }
+
       sub.innerHTML = "$" + (number) + ".00";
       subtotal.appendChild(sub);
 

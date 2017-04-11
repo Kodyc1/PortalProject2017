@@ -53,7 +53,6 @@
     </footer>
 
 
-
     <!-- Javascript -->
     <script>
 
@@ -108,15 +107,6 @@
               modalContainer.css("display","block");
             })
 
-
-            $('.button').on('click', function(e){
-              // var index = parseInt($(this).attr("class"));
-              var str = $(this).attr("class");
-              var index = parseInt(str.slice(13, str.length));
-              console.log(menu[index]["quantity"]++);
-
-            })
-
           })
         });
 
@@ -129,7 +119,7 @@
         // });
 
         $('.modalContainer').on('click', '.close', function(e){
-          $('.modalContainer')css("display","none");
+          $('.modalContainer').css("display","none");
         });
 
         $('.menu-container').on('click', ".button", function(e){
@@ -139,8 +129,19 @@
 
           $("#cart").html("Cart (" + cartNumber + ")");
 
-          console.log()
-          // update to postman
+          var str = $(this).attr("class");
+          var index = parseInt(str.slice(13, str.length));
+
+          var link = "http://thiman.me:1337/cart/kody/" + menu[index]["_id"];
+
+          var quantity = ++menu[index]["quantity"];
+
+          $.ajax({
+            url: link,
+            type:"PATCH",
+            data:{"quantity":quantity}
+          });
+
         });
 
 
