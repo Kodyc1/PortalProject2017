@@ -9,7 +9,6 @@
 </head>
 
 <body>
-
     <!-- Modal -->
     <div class="modalContainer">
       <div class="modal-header">
@@ -23,7 +22,6 @@
       <div class="modal-footer">
       </div>
     </div>
-
 
     <!-- Navbar -->
     <header>
@@ -47,14 +45,14 @@
 
     <!-- Menu -->
     <div class="menu-container">
-      <div class="menu">
-      </div>
     </div>
 
     <!-- Footer -->
     <footer>
         <p>Contact</p>
     </footer>
+
+
 
     <!-- Javascript -->
     <script>
@@ -69,7 +67,6 @@
             var menuContainer = $('.menu-container');
 
             // Create button
-            var button = $('<button/>').addClass("button").html("Add to Cart");
 
             // Loop through menu in database
             for (var i = 0; i < menu.length; i++){
@@ -88,6 +85,8 @@
                 var image = $('<img/>').attr("src", item.img).attr("id", i);
                 itemEle.append(image);
 
+                var button = $('<button/>').addClass("button").addClass("button" + i).html("Add to Cart");
+
                 container.append(title).append(itemEle).append(button.clone());
 
                 menuContainer.append(container);
@@ -101,13 +100,21 @@
               var index = parseInt($(this).attr("id"));
               var item = menu[index];
 
-              console.log(item.ingredients);
-              console.log(item.price);
-
+              // console.log(item.ingredients);
+              // console.log(item.price);
               $("#ingredients").html(`Ingredients: ${item.ingredients}`);
               $("#price").html(`Price: \$${item.price}`);
 
               modalContainer.css("display","block");
+            })
+
+
+            $('.button').on('click', function(e){
+              // var index = parseInt($(this).attr("class"));
+              var str = $(this).attr("class");
+              var index = parseInt(str.slice(13, str.length));
+              console.log(menu[index]["quantity"]++);
+
             })
 
           })
@@ -115,31 +122,26 @@
 
 
         // EVENT DELEGATION
+        var cartNumber = 0;
 
+        // $('.modalContainer').on('click', window, function(e){
+        //   $('.modalContainer').css("display","none");
+        // });
 
-        // var button = $(".button");
-        // button.on('click', ".button", function(e){
-        //   console.log('helo');
-        // });
-        //
-        // var modal = $('.modalContainer');
-        //
-        // $(window).on('click', function(event){
-        //   var element = $(this);
-        //   console.log(element);
-        //   if (event.target == modal) {
-        //       console.log("hello");
-        //       modal.css("display","none");
-        //   }
-        // });
-        //
-        // window.onclick = function(event) {
-        //     if (event.target == modal) {
-        //         console.log("hello");
-        //         modal.style.display = "none";
-        //     }
-        // }
-        //
+        $('.modalContainer').on('click', '.close', function(e){
+          $('.modalContainer')css("display","none");
+        });
+
+        $('.menu-container').on('click', ".button", function(e){
+          var button = $(this);
+
+          cartNumber++;
+
+          $("#cart").html("Cart (" + cartNumber + ")");
+
+          console.log()
+          // update to postman
+        });
 
 
         document.querySelectorAll("button").forEach(

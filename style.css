@@ -1,8 +1,6 @@
-
 *{
   font-family: "Cambria";
 }
-
 
 body{
   background-color: lightgrey;
@@ -132,6 +130,7 @@ h1{
 }
 
 
+
 img{
   cursor: pointer;
   height: 400px;
@@ -141,8 +140,6 @@ img{
   margin: 0 1em 0 1em;
   padding: 0;
 }
-
-
 
 footer{
   margin-top: 2em;
