@@ -65,8 +65,6 @@
             // Select menu Container
             var menuContainer = $('.menu-container');
 
-            // Create button
-
             // Loop through menu in database
             for (var i = 0; i < menu.length; i++){
 
@@ -110,9 +108,23 @@
           })
         });
 
+        $.ajax({
+          url: "http://thiman.me:1337/cart/kody",
+          type: "GET",
+          success: (function(e){
+            menu = e;
+            var c = 0;
+            for (var i = 0; i < menu.length; i++){
+              var item = menu[i];
+              c += parseInt(item["quantity"]);
+            }
+
+            cart.innerHTML = "Cart (" + c + ")";
+          })
+        });
 
         // EVENT DELEGATION
-        var cartNumber = 0;
+
 
         // $('.modalContainer').on('click', window, function(e){
         //   $('.modalContainer').css("display","none");
@@ -124,6 +136,10 @@
 
         $('.menu-container').on('click', ".button", function(e){
           var button = $(this);
+
+          var cartNo = $('#cart').html();
+          var length = cartNo.length - 1;
+          var cartNumber = parseInt(cartNo.slice(6, length));
 
           cartNumber++;
 
@@ -143,20 +159,6 @@
           });
 
         });
-
-
-        document.querySelectorAll("button").forEach(
-            function(obj) {
-                obj.addEventListener('click',
-                    function() {
-
-                        cartNumber++;
-
-                        cart.innerHTML = "Cart (" + cartNumber + ")";
-                    }
-                )
-            }
-        );
 
 
     </script>
