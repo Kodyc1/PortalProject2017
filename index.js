@@ -14,7 +14,7 @@ app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
 
-
+mongoose.Promise = global.Promise;
 
 mongoose.connect('mongodb://localhost/test');
 
@@ -44,7 +44,7 @@ kittySchema.methods.speak = function () {
 var Kitten = mongoose.model('Kitten', kittySchema);
 
 var silence = new Kitten({ name: 'Silence' });
-console.log(silence.name); // 'Silence'
+//console.log(silence.name); // 'Silence'
 
 
 var fluffy = new Kitten({ name: 'fluffy' });

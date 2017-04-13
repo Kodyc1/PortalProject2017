@@ -108,6 +108,7 @@
           })
         });
 
+        // maintain cart quantity
         $.ajax({
           url: "http://thiman.me:1337/cart/kody",
           type: "GET",
@@ -130,10 +131,12 @@
         //   $('.modalContainer').css("display","none");
         // });
 
+        // close modal when close button
         $('.modalContainer').on('click', '.close', function(e){
           $('.modalContainer').css("display","none");
         });
 
+        // add to cart button click event
         $('.menu-container').on('click', ".button", function(e){
           var button = $(this);
 
@@ -152,12 +155,12 @@
 
           var quantity = ++menu[index]["quantity"];
 
+          // update quantity of clicked item in cart
           $.ajax({
             url: link,
             type:"PATCH",
             data:{"quantity":quantity}
           });
-
         });
 
 
