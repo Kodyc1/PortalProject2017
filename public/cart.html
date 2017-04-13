@@ -78,7 +78,8 @@
       for (var i = 0; i < menu.length; i++){
 
           if (menu[i]["quantity"] != 0){
-            var row = document.createElement("tr")
+            var row = document.createElement("tr");
+            row.id = i;
 
             var image = document.createElement("td");
             image.className = "image";
@@ -152,11 +153,23 @@
 
     var id = menu[index]["_id"];
 
+    var cartNo = $('#cart').html();
+    var length = cartNo.length - 1;
+    var cartNumber = parseInt(cartNo.slice(6, length));
+
+    cartNumber -= menu[index]["quantity"];
+
+    $("#cart").html("Cart (" + cartNumber + ")");
+
+    $('#'+index).closest('tr').remove();
+
+
     $.ajax({
       url: "http://thiman.me:1337/cart/kody/" + id,
       type: "PATCH",
       data: {"quantity":0}
     });
+
 
   });
 
