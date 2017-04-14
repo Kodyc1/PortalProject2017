@@ -44,9 +44,9 @@
     </div>
 
     <div class="button">
-      <button>
-        Register
-      </button>
+        <button disable>
+          Register
+        </button>
     </div>
     <div class="register">
       <p>Existing User? <a href="login.html"> <span>Sign in here.</span></a></p>
@@ -112,6 +112,7 @@
                 if (email === array[i]["username"]){
                     console.log("user already exists");
                     existence++;
+                    return;
                 }
               }
 
@@ -122,6 +123,7 @@
                   type: "POST",
                   data: {username: email, password: pass}
                 });
+                window.location = "login.html"
               }
 
           }

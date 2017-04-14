@@ -56,14 +56,15 @@
     <!-- Javascript -->
     <script>
 
+
         var menu = [];
         $.ajax({
           // url: "http://thiman.me:1337/menu/kody",
-          url: "http://localhost:3000/menu",
+          url: "http://localhost:3000/menu/",
           type: "GET",
           success:(function(e){
             menu = e;
-
+            console.log(menu)
             // Select menu Container
             var menuContainer = $('.menu-container');
 
@@ -94,19 +95,21 @@
             // Create modal
             var modalContainer = $('.modalContainer');
 
+            console.log(menu)
             $('.menu-item .item img').on('click', function(e){
               // get index of item
+              console.log(menu)
               var index = parseInt($(this).attr("id"));
               var item = menu[index];
 
-              // console.log(item.ingredients);
-              // console.log(item.price);
+              console.log(item);
+              console.log(item.ingredients);
+              console.log(item.price);
               $("#ingredients").html(`Ingredients: ${item.ingredients}`);
               $("#price").html(`Price: \$${item.price}`);
 
               modalContainer.css("display","block");
             })
-
 
           })
         });
@@ -122,11 +125,9 @@
               var item = menu[i];
               c += parseInt(item["quantity"]);
             }
-
             cart.innerHTML = "Cart (" + c + ")";
           })
         });
-
 
         // EVENT DELEGATION
 

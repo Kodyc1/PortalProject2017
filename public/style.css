@@ -120,7 +120,7 @@ h1{
 .close {
     color: #aaa;
     float: right;
-    font-size: 1em;
+    font-size: 3em;
 }
 
 .close:hover, .close:focus {
