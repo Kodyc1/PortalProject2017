@@ -56,6 +56,7 @@
     <!-- Javascript -->
     <script>
 
+        var menu = [];
         $.ajax({
           // url: "http://thiman.me:1337/menu/kody",
           url: "http://localhost:3000/menu",
@@ -106,45 +107,13 @@
               modalContainer.css("display","block");
             })
 
-            // post to cart if not exists
-            $.ajax({
-              url: "http://thiman.me:1337/cart/kody",
-              type: "GET",
-              success:(function(e){
-                  cart = e;
-                  // check if menu item exists in cart
-                  for (var i = 0; i < menu.length; i++){
-                    var exists = 0;
-                    for (var j = 0; j < cart.length; j++){
-                      if (menu[i]["_id"] === cart[j]["_id"]){
-                        //console.log(menu[i]["_id"])
-                        //console.log(cart[j]["_id"])
-                        exists++;
-                      }
-                    }
-                    if (exists === 0){
-                      //console.log(exists)
-                      $.ajax({
-                        url: "http://thiman.me:1337/cart/kody",
-                        type: "POST",
-                        data: {
-                                _id: menu[i]["_id"],
-                                title: menu[i]["title"],
-                                img: menu[i]["img"],
-                                price: menu[i]["price"],
-                                ingredients: menu[i]["ingredients"]
-                              }
-                      });
-                    }
-                  }
-              })
-            })
+
           })
         });
 
         // maintain cart quantity
         $.ajax({
-          url: "http://thiman.me:1337/cart/kody",
+          url: "http://localhost:3000/cart",
           type: "GET",
           success: (function(e){
             menu = e;
@@ -185,7 +154,7 @@
           var str = $(this).attr("class");
           var index = parseInt(str.slice(13, str.length));
 
-          var link = "http://thiman.me:1337/cart/kody/" + menu[index]["_id"];
+          var link = "http://localhost:3000/cart/" + menu[index]["_id"];
 
           var quantity = ++menu[index]["quantity"];
 

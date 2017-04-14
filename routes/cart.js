@@ -5,30 +5,53 @@ var router = express.Router();
 
 
 
-router.patch('/', function(req, res){
+router.patch('/:id', function(req, res){
   // contains update params
   var body = req.body;
-
+  var id = req.params.id;
   //
-  var update = new CartModel(body);
-
-
+  CartModel.findByIdAndUpdate(id, { $set: {quantity: body["quantity"] }},
+                              {new: true}, function(err,doc)
+  {
+    if(err){
+      console.log(err);
+      res.send(err);
+    } else{
+      res.send("Patched quantity")
+    }
+  })
 
 });
 
-router.delete("/", function(req,res)){
 
-}
+
+router.delete("/:id", function(req,res){
+
+  var id = req.params.id.toString();
+
+  CartModel.remove({"_id":id},function(err, doc){
+    if(err){
+      console.log(err);
+      res.send(err);
+    } else{
+      console.log(doc);
+      res.send("DELETE request at id")
+    }
+  })
+
+});
+
+
 
 router.post("/", function(req, res){
   var body = req.body;
   console.log(body);
 
   var newCart = new CartModel(body);
-  newCart.save(function(err.doc){
+  newCart.save(function(err,doc){
     if(err){
       console.log(err);
-      re.send(err);
+      res.send(err);
     } else{
       console.log(doc);
       res.json(doc);
@@ -48,7 +71,6 @@ router.get('/', function(req, res){
     }
   });
 });
-
 
 
 

@@ -4,6 +4,21 @@ var MenuModel = require('../models/menu');
 var router = express.Router();
 
 
+router.delete('/:id', function(req,res){
+
+  var id = req.params.id.toString();
+
+  MenuModel.remove({"_id":id}, function(err, doc){
+    if(err){
+      console.log(err);
+      res.send(err);
+    } else{
+      console.log(doc);
+      res.send("delete request at id")
+    }
+  });
+});
+
 // post request to menu
 router.post('/', function(req, res){
   // body of the request
