@@ -6,6 +6,7 @@
 
   <link href="registerstyle.css" type="text/css" rel="stylesheet">
 
+  <script src="https://code.jquery.com/jquery-3.2.0.js"></script>
 </head>
 <body>
 
@@ -24,22 +25,22 @@
   </div>
 
 
-  <div id="bulk">
+  <div id="form">
     <div class="input">
       <p>First Name:</p>
-      <p><input type="username"></p>
+      <p><input id="first" type="username"></p>
 
       <p>Last Name:</p>
-      <p><input type="username"></p>
+      <p><input id="last" type="username"></p>
 
       <p>Email:</p>
-      <p><input type="email"></p>
+      <p><input id="email" type="email"></p>
 
       <p>Create Password:</p>
-      <p><input type="password"></p>
+      <p><input id="password" type="password"></p>
 
       <p>Re-enter Password:</p>
-      <p><input type="password"></p>
+      <p><input id="confirmation" type="password"></p>
     </div>
 
     <div class="button">
@@ -52,6 +53,84 @@
     </div>
   </div>
 
+
+  <script>
+
+      // carry cart number over
+      $.ajax({
+        url: "http://localhost:3000/cart",
+        type: "GET",
+        success: function(e){
+          var cart = e;
+
+          var cartNumber = 0;
+
+          for (var i = 0; i < cart.length; i++){
+              cartNumber += parseInt(cart[i]["quantity"]);
+          }
+
+          $("#cart").html("Cart (" + cartNumber + ")");
+        }
+      });
+
+
+      // Register user by posting to users
+
+      // Clicking Register button
+      $('.button').on('click', 'button', function(e){
+        console.log('hello');
+
+        var first = $('#first').val();
+        var last = $('#last').val();
+        var email = $('#email').val();
+
+
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if(!re.test(email)){
+          alert("Invalid email format");
+          return;
+        }
+
+        // salt hash these
+        var pass = $('#password').val();
+        var confirm = $('#confirmation').val();
+
+        if (pass != confirm){
+          alert("Passwords don't match");
+        }
+
+
+        $.ajax({
+          url: "http://localhost:3000/users",
+          type: "GET",
+          success: function(e){
+              array = e;
+
+              var existence = 0
+              for ( var i = 0; i < array.length; i++){
+                if (email === array[i]["username"]){
+                    console.log("user already exists");
+                    existence++;
+                }
+              }
+
+              if (existence == 0){
+                console.log("user doesn't exist yet");
+                $.ajax({
+                  url: "http://localhost:3000/users",
+                  type: "POST",
+                  data: {username: email, password: pass}
+                });
+              }
+
+          }
+        });
+
+      });
+
+
+  </script>
 
 </body>
 </html>

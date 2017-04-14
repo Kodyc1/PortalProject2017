@@ -50,20 +50,5 @@ router.get('/', function(req,res){
   });
 });
 
-/* GET home page. */
-// router.get('/', function(req, res) {
-//   // TODO: get all menu items
-//   var kitty = new Menu({ name: 'Zildjian' });
-//
-//   kitty.save(function (err) {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       console.log('meow');
-//     }
-//   });
-//   res.json([]);
-//
-// });
 
 module.exports = router;
