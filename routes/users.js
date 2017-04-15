@@ -11,7 +11,6 @@ router.post('/', function(req, res){
   console.log(body);
   // create new menu item with post request
   var newUser = new UserModel(body);
-
   newUser.save(function(err, doc){
     if (err){
       console.log(err);
@@ -37,7 +36,6 @@ router.patch('/', function(req, res){
       console.log(match);
       res.send(match);
     });
-
   })
 
 });
@@ -52,9 +50,7 @@ router.get("/", function(req,res){
       console.log(err);
       res.send(err);
     } else{
-      //console.log("hello");
-      // var user = docs.toObject();
-      // delete user.password;
+      req.kody.user = docs;
       res.json(docs);
     }
   });
