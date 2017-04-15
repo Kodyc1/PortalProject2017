@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include head.ejs %>
+
+    <link rel='stylesheet' href="cart.css" />
+  </head>
+
+  <body>
+    <!-- header -->
+    <% include header.ejs %>
+
+    <!-- Cart -->
+    <table align="center">
+      <thead>
+        <tr>
+          <th colspan=2>Item</th>
+          <th>Quantity</th>
+          <th>Cost</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody class="cart">
+      </tbody>
+
+      <tfoot>
+        <tr id="subtotal">
+          <td colspan=3>Subtotal</td>
+        </tr>
+        <tr id="tax">
+          <td colspan=3>Tax</td>
+        </tr>
+        <tr id="total">
+          <td colspan=3>Total</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="coupon">
+      <p>Enter coupon code: <input type="username"></p>
+    </div>
+
+    <div class="button">
+        <a href="/checkout"><button>Checkout</button></a>
+    </div>
+
+
+    <script>
+
+      // get cart and populate page
+      $.ajax({
+        url: "http://localhost:3000/cart",
+        type: "GET",
+        success:(function(e){
+          menu = e;
+
+          cartNumber = 0;
+
+          var cart = $('.cart');
+
+          for (var i = 0; i < menu.length; i++){
+
+              if (menu[i]["quantity"] != 0){
+                var row = document.createElement("tr");
+                row.id = i;
+
+                var image = document.createElement("td");
+                image.className = "image";
+
+                var img = document.createElement('img');
+                img.src = menu[i]["img"];
+
+                image.appendChild(img);
+
+                var title = document.createElement("td");
+                title.className = "title";
+                title.innerHTML = menu[i]["title"];
+
+                var quantity = document.createElement("td");
+                quantity.innerHTML = menu[i]["quantity"];
+
+                var cost = document.createElement("td");
+                cost.innerHTML = '$' + (menu[i]["quantity"] * menu[i]["price"]) + ".00";
+
+                var decrease = document.createElement("td");
+                var b = document.createElement("button");
+                b.className = "button"+ " button" + i;
+                b.innerHTML = "Delete";
+                decrease.appendChild(b);
+
+                row.append(image);
+                row.append(title);
+                row.append(quantity);
+                row.append(cost);
+                row.append(decrease);
+
+                cart.append(row);
+
+                cartNumber += parseInt(menu[i]["quantity"]);
+
+              }
+          }
+
+          var subtotal = document.querySelector("#subtotal");
+          var sub = document.createElement("td");
+
+          var number = 0;
+          for (var i = 0; i < menu.length; i++){
+            number += parseInt(menu[i]["price"]) * parseInt(menu[i]["quantity"]);
+          }
+
+          sub.innerHTML = "$" + (number) + ".00";
+          subtotal.appendChild(sub);
+
+          var tax = document.querySelector("#tax");
+          var t = document.createElement("td");
+          var tnumber = Math.round(.0725*(number)*100)/100;
+          t.innerHTML = "$" + tnumber;
+          tax.appendChild(t);
+
+          var total = document.querySelector("#total");
+          var tot = document.createElement("td");
+          tot.innerHTML = "$" + (number + tnumber);
+          total.appendChild(tot);
+
+          console.log(cartNumber);
+          $("#cart").html("Cart (" + cartNumber + ")");
+
+        })
+      });
+
+
+      $('.cart').on('click','.button', function(e){
+
+        var str = $(this).attr("class");
+        var index = parseInt(str.slice(13, str.length));
+
+        var id = menu[index]["_id"];
+
+        // Change cart number when deleting
+        var cartNo = $('#cart').html();
+        var length = cartNo.length - 1;
+        var cartNumber = parseInt(cartNo.slice(6, length));
+        cartNumber -= menu[index]["quantity"];
+        $("#cart").html("Cart (" + cartNumber + ")");
+
+        $('#'+index).closest('tr').remove();
+
+
+        $.ajax({
+          url: "http://localhost:3000/cart/" + id,
+          type: "PATCH",
+          data: {"quantity":0}
+        });
+
+
+      });
+
+    </script>
+  </body>
+</html>

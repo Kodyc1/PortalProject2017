@@ -8,11 +8,16 @@ var schema = new Schema({
   password: {type:String, required:true}
 });
 
+schema.methods.toJSON = function(){
+  var obj = this.toObject();
+  delete obj.password;
+  return obj;
+}
+
 schema.pre('save', function(next){
   var user = this;
 
   if (!user.isModified('password')) return next();
-
 
   bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt){
     if (err){

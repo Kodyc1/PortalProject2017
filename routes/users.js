@@ -24,6 +24,25 @@ router.post('/', function(req, res){
 });
 
 
+router.patch('/', function(req, res){
+
+  var body = req.body;
+
+  UserModel.findOne({username: req.body["username"].trim()}, function(err, user){
+
+    if (err) throw err;
+
+    user.comparePassword(req.body["password"], function(err, match){
+      if (err) throw err;
+      console.log(match);
+      res.send(match);
+    });
+
+  })
+
+});
+
+
 
 /* GET users listing. */
 router.get("/", function(req,res){
@@ -33,7 +52,9 @@ router.get("/", function(req,res){
       console.log(err);
       res.send(err);
     } else{
-      console.log("hello");
+      //console.log("hello");
+      // var user = docs.toObject();
+      // delete user.password;
       res.json(docs);
     }
   });
