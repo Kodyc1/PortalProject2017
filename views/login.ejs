@@ -31,22 +31,22 @@
 
 
     <script>
-        // carry cart over
-        $.ajax({
-          url: "http://localhost:3000/cart",
-          type: "GET",
-          success: function(e){
-            var cart = e;
-
-            var cartNumber = 0;
-
-            for (var i = 0; i < cart.length; i++){
-                cartNumber += parseInt(cart[i]["quantity"]);
-            }
-
-            $("#cart").html("Cart (" + cartNumber + ")");
-          }
-        });
+        // // carry cart over
+        // $.ajax({
+        //   url: "http://localhost:3000/cart",
+        //   type: "GET",
+        //   success: function(e){
+        //     var cart = e;
+        //
+        //     var cartNumber = 0;
+        //
+        //     for (var i = 0; i < cart.length; i++){
+        //         cartNumber += parseInt(cart[i]["quantity"]);
+        //     }
+        //
+        //     $("#cart").html("Cart (" + cartNumber + ")");
+        //   }
+        // });
 
         $('.button').on('click', 'button', function(e){
 
@@ -74,6 +74,7 @@
                 window.location = "/";
               } else{
                 alert("login failed");
+                window.location = "/login";
               }
             }
           })

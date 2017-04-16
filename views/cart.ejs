@@ -154,6 +154,38 @@
           data: {"quantity":0}
         });
 
+        if (<%= user %> === false){
+
+        } else {
+          $.ajax({
+            url: "http://localhost:3000/users/current/" + "<%=user._id%>",
+            type: "PATCH",
+            success: function(e){
+              x = [];
+              x.push(e.one);
+              x.push(e.two);
+              x.push(e.three);
+              x.push(e.four);
+
+              var links = "http://localhost:3000/users/" + "<%=user._id%>";
+
+              x[index] = 0;
+
+              $.ajax({
+                  url: links,
+                  type: "PATCH",
+                  data: {"one": x[0],
+                        "two": x[1],
+                        "three": x[2],
+                        "four": x[3]}
+              });
+            }
+          });
+        }
+
+
+
+
 
       });
 

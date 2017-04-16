@@ -33,6 +33,7 @@
     <% include footer.ejs %>
 
     <script>
+
     var menu = [];
     var quantity = [];
     $.ajax({
@@ -85,43 +86,65 @@
           modalContainer.css("display","block");
         })
 
-        quantity = [<%= user.quantity %>]
-        console.log(quantity);
+
       })
     });
 
 
-
       //update with user quantity
-      $.ajax({
-        url: "http://localhost:3000/users/current/" + "<%= user._id %>",
-        type: "PATCH",
-        success: (function(e){
-          var userinfo = e;
-          var c = 0;
-          var array = userinfo.quantity;
-          for (var i = 0; i < array.length; i++){
-            c += array[i];
-          }
-          cart.innerHTML = "Cart (" + c + ")";
-        })
-      });
+      if (<%=user%> === false){
+          // maintain cart quantity
+          $.ajax({
+            url: "http://localhost:3000/cart",
+            type: "GET",
+            success: (function(e){
+              menu = e;
+              var c = 0;
+              for (var i = 0; i < menu.length; i++){
+                var item = menu[i];
+                c += parseInt(item["quantity"]);
+              }
+              cart.innerHTML = "Cart (" + c + ")";
+            })
+          });
 
+      } else{
 
-      // // maintain cart quantity
-      // $.ajax({
-      //   url: "http://localhost:3000/cart",
-      //   type: "GET",
-      //   success: (function(e){
-      //     menu = e;
-      //     var c = 0;
-      //     for (var i = 0; i < menu.length; i++){
-      //       var item = menu[i];
-      //       c += parseInt(item["quantity"]);
-      //     }
-      //     cart.innerHTML = "Cart (" + c + ")";
-      //   })
-      // });
+        $.ajax({
+          url: "http://localhost:3000/users/current/" + "<%= user._id %>",
+          type: "PATCH",
+          success: (function(e){
+            console.log(e)
+            var userinfo = e;
+            var c = 0;
+            c += userinfo.one;
+            c += userinfo.two;
+            c += userinfo.three;
+            c += userinfo.four;
+            cart.innerHTML = "Cart (" + c + ")";
+
+            $.ajax({
+              url: "http://localhost:3000/cart",
+              type: "GET",
+              success: function(e){
+                x = [];
+                x.push(userinfo.one);
+                x.push(userinfo.two);
+                x.push(userinfo.three);
+                x.push(userinfo.four);
+                for(var i = 0; i < e.length; i++){
+                    $.ajax({
+                        url: "http://localhost:3000/cart/" + e[i]["_id"],
+                        type: "PATCH",
+                        data: {quantity: x[i]}
+                    });
+                }
+              }
+            })
+          })
+        });
+      }
+
 
       // EVENT DELEGATION
 
@@ -134,8 +157,6 @@
         $('.modalContainer').css("display","none");
       });
 
-
-      var x = [<%= user.quantity %>];
 
       // add to cart button click event
       $('.menu-container').on('click', ".button", function(e){
@@ -156,33 +177,57 @@
         var str = $(this).attr("class");
         var index = parseInt(str.slice(13, str.length));
 
-        var link = "http://localhost:3000/cart/" + menu[index]["_id"];
-
-        var quantity = ++menu[index]["quantity"];
-
-        // update quantity of clicked item in cart
         $.ajax({
-          url: link,
-          type:"PATCH",
-          data:{"quantity":quantity}
+          url: "http://localhost:3000/cart/",
+          type: "GET",
+          success: function(e){
+            cart = e;
+
+            var link = "http://localhost:3000/cart/" + cart[index]["_id"];
+
+            console.log(cart[index])
+            var quantity = ++cart[index]["quantity"];
+
+            console.log(cart)
+
+            // update quantity of clicked item in cart
+            $.ajax({
+              url: link,
+              type:"PATCH",
+              data:{"quantity":quantity}
+            });
+          }
+
         });
 
-        var links = "http://localhost:3000/users/" + "<%=user._id%>";
-
-
-        x[index] = ++x[index];
-
-        console.log(x)
-
-
-
-        $.ajax({
-            url: links,
+        if (<%= user%> === false){
+          console.log("false");
+        } else{
+          $.ajax({
+            url: "http://localhost:3000/users/current/" + "<%=user._id%>",
             type: "PATCH",
-            data: {"quantity": x[0],"quantity": x[1]}
-        })
+            success: function(e){
+              x = [];
+              x.push(e.one);
+              x.push(e.two);
+              x.push(e.three);
+              x.push(e.four);
 
+              var links = "http://localhost:3000/users/" + "<%=user._id%>";
 
+              x[index] = ++x[index];
+
+              $.ajax({
+                  url: links,
+                  type: "PATCH",
+                  data: {"one": x[0],
+                        "two": x[1],
+                        "three": x[2],
+                        "four": x[3]}
+              });
+            }
+          });
+        }
 
       });
 

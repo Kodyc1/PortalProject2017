@@ -29,18 +29,28 @@ router.post('/login', function(req, res){
 
   UserModel.findOne({username: req.body["username"].trim()}, function(err, user){
 
-    if (err) throw err;
+    if (err){
 
-    user.comparePassword(req.body["password"], function(err, match){
+      res.send(false);
+    }
 
-      if (err) {
-        res.status(401).send();
+    else{
+      if (!user){
+        console.log("no");
+        res.send(false);
+      }else{
+        user.comparePassword(req.body["password"], function(err, match){
+
+          if (err) {
+            res.status(401).send();
+          }
+
+          req.session.user = user;
+          //console.log(req.session.user);
+          res.send(match);
+        });
       }
-
-      req.session.user = user;
-      //console.log(req.session.user);
-      res.send(match);
-    });
+    }
   })
 
 });
@@ -50,7 +60,7 @@ router.patch("/:id", function(req,res){
   var body = req.body;
   console.log(body);
   var id = req.params.id;
-  UserModel.findByIdAndUpdate(id, { $set: {quantity: body["quantity"]}},
+  UserModel.findByIdAndUpdate(id, { $set: {one: body["one"], two: body["two"], three: body["three"], four: body["four"]} },
                                     {new: true}, function(err,doc){
       if(err){
         console.log(err);

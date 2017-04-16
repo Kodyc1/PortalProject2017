@@ -8,7 +8,10 @@ var schema = new Schema({
   lname: {type:String, required: true},
   username: {type:String, required:true, unique: true},
   password: {type:String, required:true},
-  quantity: [Number]
+  one: Number,
+  two: {type:Number},
+  three: {type: Number},
+  four: {type: Number}
 });
 
 schema.methods.toJSON = function(){

@@ -15,7 +15,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/carts', function(req, res, next) {
-  res.render('cart', { title: 'Cart', h1: 'Cart', user: req.session.user });
+  var current = req.session.user;
+  if (current){
+    res.render('cart', { title: 'Cart', h1: 'Cart', user: req.session.user });
+  } else{
+    req.session.destroy()
+    res.render('cart', { title: 'Cart', h1: 'Cart', user:  false });
+  }
 });
 
 router.get('/login', function(req, res, next) {
