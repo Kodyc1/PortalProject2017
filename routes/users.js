@@ -23,7 +23,7 @@ router.post('/', function(req, res){
 });
 
 
-router.patch('/', function(req, res){
+router.post('/login', function(req, res){
 
   var body = req.body;
 
@@ -32,14 +32,47 @@ router.patch('/', function(req, res){
     if (err) throw err;
 
     user.comparePassword(req.body["password"], function(err, match){
-      if (err) throw err;
-      console.log(match);
+
+      if (err) {
+        res.status(401).send();
+      }
+
+      req.session.user = user;
+      //console.log(req.session.user);
       res.send(match);
     });
   })
 
 });
 
+
+router.patch("/:id", function(req,res){
+  var body = req.body;
+  console.log(body);
+  var id = req.params.id;
+  UserModel.findByIdAndUpdate(id, { $set: {quantity: body["quantity"]}},
+                                    {new: true}, function(err,doc){
+      if(err){
+        console.log(err);
+        res.send(err);
+      }  else{
+        res.json(body);
+      }
+  })
+});
+
+
+router.patch("/current/:id", function(req,res){
+  var id = req.params.id;
+  UserModel.findOne({_id:id}, function(err, doc){
+    if (err){
+      console.log(err);
+      res.send(err);
+    } else{
+      res.json(doc);
+    }
+  })
+})
 
 
 /* GET users listing. */
@@ -48,9 +81,8 @@ router.get("/", function(req,res){
   UserModel.find({}, function(err,docs){
     if (err){
       console.log(err);
-      res.send(err);
+      res.status(401).send();
     } else{
-      req.kody.user = docs;
       res.json(docs);
     }
   });

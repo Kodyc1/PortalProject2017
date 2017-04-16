@@ -7,6 +7,7 @@
   </head>
 
   <body>
+
     <!-- Modal -->
     <div class="modalContainer">
       <div class="modal-header">
@@ -24,7 +25,6 @@
     <!-- header -->
     <% include header.ejs %>
 
-
     <!-- Menu -->
     <div class="menu-container">
     </div>
@@ -34,12 +34,13 @@
 
     <script>
     var menu = [];
+    var quantity = [];
     $.ajax({
       url: "http://localhost:3000/menu/",
       type: "GET",
       success:(function(e){
         menu = e;
-        console.log(menu)
+        // console.log(menu)
         // Select menu Container
         var menuContainer = $('.menu-container');
 
@@ -70,9 +71,10 @@
         // Create modal
         var modalContainer = $('.modalContainer');
 
-        console.log(menu)
+        // console.log(menu)
         $('.menu-item .item img').on('click', function(e){
           // get index of item
+
           var index = parseInt($(this).attr("id"));
           var item = menu[index];
 
@@ -83,23 +85,43 @@
           modalContainer.css("display","block");
         })
 
+        quantity = [<%= user.quantity %>]
+        console.log(quantity);
       })
     });
 
-      // maintain cart quantity
+
+
+      //update with user quantity
       $.ajax({
-        url: "http://localhost:3000/cart",
-        type: "GET",
+        url: "http://localhost:3000/users/current/" + "<%= user._id %>",
+        type: "PATCH",
         success: (function(e){
-          menu = e;
+          var userinfo = e;
           var c = 0;
-          for (var i = 0; i < menu.length; i++){
-            var item = menu[i];
-            c += parseInt(item["quantity"]);
+          var array = userinfo.quantity;
+          for (var i = 0; i < array.length; i++){
+            c += array[i];
           }
           cart.innerHTML = "Cart (" + c + ")";
         })
       });
+
+
+      // // maintain cart quantity
+      // $.ajax({
+      //   url: "http://localhost:3000/cart",
+      //   type: "GET",
+      //   success: (function(e){
+      //     menu = e;
+      //     var c = 0;
+      //     for (var i = 0; i < menu.length; i++){
+      //       var item = menu[i];
+      //       c += parseInt(item["quantity"]);
+      //     }
+      //     cart.innerHTML = "Cart (" + c + ")";
+      //   })
+      // });
 
       // EVENT DELEGATION
 
@@ -112,10 +134,16 @@
         $('.modalContainer').css("display","none");
       });
 
+
+      var x = [<%= user.quantity %>];
+
       // add to cart button click event
       $('.menu-container').on('click', ".button", function(e){
+
+
         var button = $(this);
 
+        // increment current number
         var cartNo = $('#cart').html();
         var length = cartNo.length - 1;
         var cartNumber = parseInt(cartNo.slice(6, length));
@@ -124,6 +152,7 @@
 
         $("#cart").html("Cart (" + cartNumber + ")");
 
+        // get index of item
         var str = $(this).attr("class");
         var index = parseInt(str.slice(13, str.length));
 
@@ -137,6 +166,24 @@
           type:"PATCH",
           data:{"quantity":quantity}
         });
+
+        var links = "http://localhost:3000/users/" + "<%=user._id%>";
+
+
+        x[index] = ++x[index];
+
+        console.log(x)
+
+
+
+        $.ajax({
+            url: links,
+            type: "PATCH",
+            data: {"quantity": x[0],"quantity": x[1]}
+        })
+
+
+
       });
 
     </script>

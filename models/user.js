@@ -4,8 +4,11 @@ var mongoose = require('mongoose'),
         SALT_WORK_FACTOR = 10;
 
 var schema = new Schema({
+  fname: {type:String, required: true},
+  lname: {type:String, required: true},
   username: {type:String, required:true, unique: true},
-  password: {type:String, required:true}
+  password: {type:String, required:true},
+  quantity: [Number]
 });
 
 schema.methods.toJSON = function(){

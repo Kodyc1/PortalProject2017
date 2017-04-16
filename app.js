@@ -25,7 +25,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  cookieName: 'kody',
+  cookieName: 'session',
   secret: '0392jfieo#O&F*WH7fw37of3wjeofwe3ij;wfjjoifojifw3eeeee',
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000,

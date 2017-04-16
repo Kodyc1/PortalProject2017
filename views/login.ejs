@@ -48,15 +48,6 @@
           }
         });
 
-        $.ajax({
-          url: "http://localhost:3000/users",
-          type: "GET",
-          success: function(e){
-              // console.log(e);
-
-          }
-        });
-
         $('.button').on('click', 'button', function(e){
 
           var pass = $('#password').val();
@@ -72,14 +63,15 @@
 
           // check if user/pass is in database
           $.ajax({
-            url: 'http://localhost:3000/users',
-            type: "PATCH",
+            url: 'http://localhost:3000/users/login',
+            type: "POST",
             data: {username: email, password: pass},
             success: function(e){
-              console.log(e)
+              //console.log(e)
 
               if(e){
                 alert("login successful");
+                window.location = "/";
               } else{
                 alert("login failed");
               }

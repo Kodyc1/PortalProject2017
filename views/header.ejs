@@ -7,7 +7,7 @@
             <li id="cart">Cart (0)</li>
         </a>
         <a href="/login">
-            <li id="login">Login/Register</li>
+            <li id="login"><%= user ? "Hello " + user.fname : "Login/Register" %></li>
         </a>
     </ul>
 </header>
