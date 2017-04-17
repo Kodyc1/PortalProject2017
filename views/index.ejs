@@ -92,7 +92,7 @@
 
 
       //update with user quantity
-      if (<%=user%> === false){
+      if (<%=bool%> === false){
           // maintain cart quantity
           $.ajax({
             url: "http://localhost:3000/cart",
@@ -200,7 +200,7 @@
 
         });
 
-        if (<%= user%> === false){
+        if (<%= bool%> === false){
           console.log("false");
         } else{
           $.ajax({
