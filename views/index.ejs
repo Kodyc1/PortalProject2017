@@ -59,7 +59,7 @@
                           .attr("id", `menu-${i}`);
 
             // insert image
-            var image = $('<img/>').attr("src", item.img).attr("id", i);
+            var image = $('<img/>').attr("src", item.img).attr("data-imgindex", i);
             itemEle.append(image);
 
             var button = $('<button/>').addClass("button").addClass("button" + i).html("Add to Cart");
@@ -76,7 +76,7 @@
         $('.menu-item .item img').on('click', function(e){
           // get index of item
 
-          var index = parseInt($(this).attr("id"));
+          var index = parseInt($(this).attr("data-imgindex"));
           var item = menu[index];
 
 

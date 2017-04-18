@@ -8,6 +8,8 @@ var mongoose = require('mongoose');
 var session = require('client-sessions')
 var router = express.Router()
 
+mongoose.Promise = global.Promise;
+
 mongoose.connect('mongodb://localhost/menu')
 
 var app = express();
