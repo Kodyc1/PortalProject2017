@@ -1,0 +1,32 @@
+{ 
+    "_id" : ObjectId("58efc78c16e26f1a14f0425a"), 
+    "title" : "Bibimbap", 
+    "img" : "Pics/bibimbap.jpg", 
+    "price" : NumberInt(15), 
+    "ingredients" : "Rice, Spinach, Beef, Egg, Carrots, Bean Sprouts", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("58efc7be16e26f1a14f0425b"), 
+    "title" : "Steak", 
+    "img" : "Pics/steak.jpg", 
+    "price" : NumberInt(20), 
+    "ingredients" : "Beef", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("58efc7db16e26f1a14f0425c"), 
+    "title" : "Katsudon", 
+    "img" : "Pics/katsudon.jpeg", 
+    "price" : NumberInt(10), 
+    "ingredients" : "Pork, Rice, Egg, Green Onion", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("58efc7f316e26f1a14f0425d"), 
+    "title" : "Brownie", 
+    "img" : "Pics/brownie.jpg", 
+    "price" : NumberInt(5), 
+    "ingredients" : "Sugar, Chocolate, Egg", 
+    "__v" : NumberInt(0)
+}

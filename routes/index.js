@@ -10,8 +10,6 @@ router.get('/', function(req, res, next) {
     req.session.destroy()
     res.render('index', { title: 'Food Ordering Website', h1: 'Menu', user: false, bool: false});
   }
-
-
 });
 
 router.get('/carts', function(req, res, next) {

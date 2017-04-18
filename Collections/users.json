@@ -1,0 +1,12 @@
+{ 
+    "_id" : ObjectId("58f43736ed651529a835e553"), 
+    "fname" : "kody", 
+    "lname" : "c", 
+    "username" : "kodycheung@yahoo.com", 
+    "password" : "$2a$10$KDbvhBaylVek8FCyduIs1eoQgmVfqWjt9rOGcOTsqNdu6QMG5pGAC", 
+    "one" : NumberInt(3), 
+    "two" : NumberInt(7), 
+    "three" : NumberInt(2), 
+    "four" : NumberInt(3), 
+    "__v" : NumberInt(0)
+}
