@@ -40,24 +40,6 @@
 
     <script>
 
-          // carry cart number over
-          $.ajax({
-            url: "http://localhost:3000/cart",
-            type: "GET",
-            success: function(e){
-              var cart = e;
-
-              var cartNumber = 0;
-
-              for (var i = 0; i < cart.length; i++){
-                  cartNumber += parseInt(cart[i]["quantity"]);
-              }
-
-              $("#cart").html("Cart (" + cartNumber + ")");
-            }
-          });
-
-
           // Register user by posting to users
 
           // Clicking Register button
@@ -80,8 +62,6 @@
               return;
             }
 
-
-
             // salt hash these
             var pass = $('#password').val();
             var confirm = $('#confirmation').val();
@@ -96,7 +76,7 @@
               return;
             }
 
-
+            // get users and see if the user exists
             $.ajax({
               url: "http://localhost:3000/users",
               type: "GET",
@@ -112,16 +92,39 @@
                     }
                   }
 
+                  // post new user and new cart if new user
                   if (existence == 0){
                     console.log("user doesn't exist yet");
                     $.ajax({
                       url: "http://localhost:3000/users",
                       type: "POST",
-                      data: {fname: first, lname: last, username: email, password: pass, one: 0, two: 0, three: 0, four: 0}
-                    });
-                    window.location = "/"
-                  }
+                      data: {fname: first, lname: last, username: email, password: pass},
+                      success: function(e){
+                        var id = e;
+                        $.ajax({
+                          url: "http://localhost:3000/cart/",
+                          type: "POST",
+                          data: {
+                            userId: id,
+                            items: []
+                          },
+                          success: function(e){
+                            $.ajax({
+                              url: 'http://localhost:3000/users/login',
+                              type: "POST",
+                              data: {username: email, password: pass},
+                              success: function(e){
+                                //console.log(e)
+                                  window.location = "/";
+                              }
+                            });
+                          }
+                        });
 
+                      }
+                    });
+
+                  }
               }
             });
 

@@ -2,10 +2,8 @@
 <html>
   <head>
     <% include head.ejs %>
-
     <link rel='stylesheet' href="style.css" />
   </head>
-
   <body>
 
     <!-- Modal -->
@@ -90,6 +88,10 @@
       })
     });
 
+      // current = user's current cart
+      var current = [];
+      // map of current cart and quantities
+      var cartmap = {};
 
       //update with user quantity
       if (<%=bool%> === false){
@@ -110,39 +112,31 @@
 
       } else{
 
+        // get current user's cart
         $.ajax({
-          url: "http://localhost:3000/users/current/" + "<%= user._id %>",
-          type: "PATCH",
-          success: (function(e){
-            console.log(e)
-            var userinfo = e;
-            var c = 0;
-            c += userinfo.one;
-            c += userinfo.two;
-            c += userinfo.three;
-            c += userinfo.four;
-            cart.innerHTML = "Cart (" + c + ")";
-
-            $.ajax({
-              url: "http://localhost:3000/cart",
-              type: "GET",
-              success: function(e){
-                x = [];
-                x.push(userinfo.one);
-                x.push(userinfo.two);
-                x.push(userinfo.three);
-                x.push(userinfo.four);
-                for(var i = 0; i < e.length; i++){
-                    $.ajax({
-                        url: "http://localhost:3000/cart/" + e[i]["_id"],
-                        type: "PATCH",
-                        data: {quantity: x[i]}
-                    });
+          url: "http://localhost:3000/cart/users/",
+          type: "GET",
+          success: function(e){
+              var c = 0;
+              cart = e;
+              for (var i = 0; i < cart.length; i++){
+                if (cart[i].userId === "<%= user._id%>"){
+                  current = cart[i].items;
+                  for (var j = 0; j < cart[i].items.length; j++){
+                    //console.log(current[j].quantity);
+                    c += current[j].quantity;
+                  }
+                  $("#cart").html("Cart (" + c + ")");
+                  break;
                 }
               }
-            })
-          })
-        });
+
+              // console.log(current)
+              for (var i = 0; i < current.length; i++){
+                  cartmap[current[i].info._id] = current[i].quantity;
+              }
+          }
+        })
       }
 
 
@@ -156,6 +150,7 @@
       $('.modalContainer').on('click', '.close', function(e){
         $('.modalContainer').css("display","none");
       });
+
 
 
       // add to cart button click event
@@ -177,59 +172,63 @@
         var str = $(this).attr("class");
         var index = parseInt(str.slice(13, str.length));
 
-        $.ajax({
-          url: "http://localhost:3000/cart/",
-          type: "GET",
-          success: function(e){
-            cart = e;
 
-            var link = "http://localhost:3000/cart/" + cart[index]["_id"];
+        // // user's current cart
+        // console.log(current);
 
-            console.log(cart[index])
-            var quantity = ++cart[index]["quantity"];
+        //  console.log(menu[index]._id);
 
-            console.log(cart)
+        var items = [];
 
-            // update quantity of clicked item in cart
-            $.ajax({
-              url: link,
-              type:"PATCH",
-              data:{"quantity":quantity}
-            });
-          }
 
-        });
-
-        if (<%= bool%> === false){
-          console.log("false");
-        } else{
-          $.ajax({
-            url: "http://localhost:3000/users/current/" + "<%=user._id%>",
-            type: "PATCH",
-            success: function(e){
-              x = [];
-              x.push(e.one);
-              x.push(e.two);
-              x.push(e.three);
-              x.push(e.four);
-
-              var links = "http://localhost:3000/users/" + "<%=user._id%>";
-
-              x[index] = ++x[index];
-
-              $.ajax({
-                  url: links,
-                  type: "PATCH",
-                  data: {"one": x[0],
-                        "two": x[1],
-                        "three": x[2],
-                        "four": x[3]}
-              });
+        for (var i = 0; i < menu.length; i++){
+          //console.log(menu[i])
+          // if menu item = clicked item
+          if (menu[i]._id === menu[index]._id){
+            // if menu item in cartmap, increment and push to new cart
+            if (menu[index]._id in cartmap){
+                cartmap[menu[index]._id]++;
+                items.push({
+                  "info" : menu[index],
+                  "quantity": cartmap[menu[index]._id]
+                })
+            // else set to 0 and push to new cart
+            } else {
+                cartmap[menu[index]._id] = 1;
+                items.push({
+                  "info" : menu[index],
+                  "quantity": cartmap[menu[index]._id]
+                })
             }
-          });
+          // if menu item but not the clicked one, push to cart
+          } else{
+            if (menu[i]._id in cartmap){
+              items.push({
+                "info" : menu[i],
+                "quantity": cartmap[menu[i]._id]
+              })
+            }
+          }
         }
 
+        //console.log(cartmap)
+
+        for (var i = 0; i < items.length; i++){
+            console.log(items[i])
+        }
+
+        // update cart call
+        $.ajax({
+          url: "http://localhost:3000/cart/users/",
+          type: "POST",
+          data: {userId: "<%= user._id %>", items: items},
+          success: function(e){
+            //console.log(e);
+          }
+        });
+
       });
+
 
     </script>
   </body>

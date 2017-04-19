@@ -48,86 +48,95 @@
 
     <script>
 
-      // get cart and populate page
+      var current = [];
+
       $.ajax({
-        url: "http://localhost:3000/cart",
-        type: "GET",
-        success:(function(e){
-          menu = e;
+          url: "http://localhost:3000/cart/users/",
+          type: "GET",
+          success: function(e){
 
-          cartNumber = 0;
+              var wholecart = e;
 
-          var cart = $('.cart');
+              var cart = $('.cart');
 
-          for (var i = 0; i < menu.length; i++){
+              cartNumber = 0;
 
-              if (menu[i]["quantity"] != 0){
-                var row = document.createElement("tr");
-                row.id = i;
+              for(var i = 0; i < wholecart.length; i++){
 
-                var image = document.createElement("td");
-                image.className = "image";
+                if (wholecart[i].userId === "<%= user._id%>"){
 
-                var img = document.createElement('img');
-                img.src = menu[i]["img"];
+                    current = wholecart[i].items;
 
-                image.appendChild(img);
+                    for (var i = 0; i < current.length; i++){
 
-                var title = document.createElement("td");
-                title.className = "title";
-                title.innerHTML = menu[i]["title"];
+                        if (current[i].quantity > 0){
+                          var row = document.createElement("tr");
+                          row.id = i;
 
-                var quantity = document.createElement("td");
-                quantity.innerHTML = menu[i]["quantity"];
+                          var image = document.createElement("td");
+                          image.className = "image";
 
-                var cost = document.createElement("td");
-                cost.innerHTML = '$' + (menu[i]["quantity"] * menu[i]["price"]) + ".00";
+                          var img = document.createElement('img');
+                          img.src = current[i].info.img;
+                          image.appendChild(img);
 
-                var decrease = document.createElement("td");
-                var b = document.createElement("button");
-                b.className = "button"+ " button" + i;
-                b.innerHTML = "Delete";
-                decrease.appendChild(b);
+                          var title = document.createElement("td");
+                          title.className = "title";
+                          title.innerHTML = current[i].info.title;
 
-                row.append(image);
-                row.append(title);
-                row.append(quantity);
-                row.append(cost);
-                row.append(decrease);
+                          var quantity = document.createElement("td");
+                          quantity.innerHTML = current[i].quantity;
 
-                cart.append(row);
+                          var cost = document.createElement("td");
+                          cost.innerHTML = '$' + (current[i].quantity * current[i].info.price) + ".00";
 
-                cartNumber += parseInt(menu[i]["quantity"]);
+                          var decrease = document.createElement("td");
+                          var b = document.createElement("button");
+                          b.className = "button"+ " button" + i;
+                          b.innerHTML = "Delete";
+                          decrease.appendChild(b);
 
+                          row.append(image);
+                          row.append(title);
+                          row.append(quantity);
+                          row.append(cost);
+                          row.append(decrease);
+
+                          cart.append(row);
+
+                          cartNumber += parseInt(current[i].quantity);
+                        }
+                    }
+                }
               }
+
+              var subtotal = document.querySelector("#subtotal");
+              var sub = document.createElement("td");
+
+              var number = 0;
+              for (var i = 0; i < current.length; i++){
+                number += parseInt(current[i].info.price) * parseInt(current[i].quantity);
+              }
+
+              sub.innerHTML = "$" + (number) + ".00";
+              subtotal.appendChild(sub);
+
+              var tax = document.querySelector("#tax");
+              var t = document.createElement("td");
+              var tnumber = Math.round(.0725*(number)*100)/100;
+              t.innerHTML = "$" + tnumber;
+              tax.appendChild(t);
+
+              var total = document.querySelector("#total");
+              var tot = document.createElement("td");
+              tot.innerHTML = "$" + (number + tnumber);
+              total.appendChild(tot);
+
+              console.log(cartNumber);
+              $("#cart").html("Cart (" + cartNumber + ")");
+
           }
 
-          var subtotal = document.querySelector("#subtotal");
-          var sub = document.createElement("td");
-
-          var number = 0;
-          for (var i = 0; i < menu.length; i++){
-            number += parseInt(menu[i]["price"]) * parseInt(menu[i]["quantity"]);
-          }
-
-          sub.innerHTML = "$" + (number) + ".00";
-          subtotal.appendChild(sub);
-
-          var tax = document.querySelector("#tax");
-          var t = document.createElement("td");
-          var tnumber = Math.round(.0725*(number)*100)/100;
-          t.innerHTML = "$" + tnumber;
-          tax.appendChild(t);
-
-          var total = document.querySelector("#total");
-          var tot = document.createElement("td");
-          tot.innerHTML = "$" + (number + tnumber);
-          total.appendChild(tot);
-
-          console.log(cartNumber);
-          $("#cart").html("Cart (" + cartNumber + ")");
-
-        })
       });
 
 
@@ -135,57 +144,33 @@
 
         var str = $(this).attr("class");
         var index = parseInt(str.slice(13, str.length));
-
-        var id = menu[index]["_id"];
+        var id = current[index].info._id;
+        console.log(id)
 
         // Change cart number when deleting
         var cartNo = $('#cart').html();
         var length = cartNo.length - 1;
         var cartNumber = parseInt(cartNo.slice(6, length));
-        cartNumber -= menu[index]["quantity"];
+        cartNumber -= current[index].quantity;
         $("#cart").html("Cart (" + cartNumber + ")");
 
         $('#'+index).closest('tr').remove();
 
+        current[index].quantity = 0;
 
-        $.ajax({
-          url: "http://localhost:3000/cart/" + id,
-          type: "PATCH",
-          data: {"quantity":0}
-        });
+        console.log(current);
+
 
         if (<%=bool%> === false){
 
         } else {
+
           $.ajax({
-            url: "http://localhost:3000/users/current/" + "<%=user._id%>",
-            type: "PATCH",
-            success: function(e){
-              x = [];
-              x.push(e.one);
-              x.push(e.two);
-              x.push(e.three);
-              x.push(e.four);
-
-              var links = "http://localhost:3000/users/" + "<%=user._id%>";
-
-              x[index] = 0;
-
-              $.ajax({
-                  url: links,
-                  type: "PATCH",
-                  data: {"one": x[0],
-                        "two": x[1],
-                        "three": x[2],
-                        "four": x[3]}
-              });
-            }
+            url: "http://localhost:3000/cart/users/",
+            type: "POST",
+            data: {userId: "<%= user._id %>", items: current}
           });
         }
-
-
-
-
 
       });
 

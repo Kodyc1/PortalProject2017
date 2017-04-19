@@ -28,6 +28,7 @@ router.get('/login', function(req, res, next) {
 });
 
 router.get('/register', function(req, res, next) {
+  req.session.destroy()
   res.render('register', { title: 'Register', h1: 'Sign Up', user: false, bool: false });
 });
 

@@ -4,6 +4,60 @@ var CartModel = require('../models/cart');
 var router = express.Router();
 
 
+// create new cart lists
+router.post("/", function(req, res){
+  var body = req.body;
+  console.log(body);
+
+  var newCart = new CartModel(body);
+  newCart.save(function(err,doc){
+    if(err){
+      console.log(err);
+      res.send(err);
+    } else{
+      console.log(doc);
+      res.json(doc);
+    }
+  })
+});
+
+
+// get the current cart list
+router.get('/users', function(req, res){
+  // get/find all cart items
+  CartModel.find({}, function(err,docs){
+    if(err){
+      console.log(err);
+      res.send(err);
+    } else{
+      res.json(docs);
+    }
+  });
+});
+
+
+// update cart
+router.post("/users", function(req, res){
+  var body = req.body;
+
+  console.log(body.items);
+  //
+  // res.send(body);
+
+  CartModel.findOneAndUpdate( { userId: body.userId },
+                              {items: body.items},
+                              {upsert:true} )
+    .then (function(updatedCart){
+      res.json(updatedCart);
+    })
+    .catch (function(err){
+      res.send(err);
+    })
+
+});
+
+
+
 
 router.patch('/:id', function(req, res){
   // contains update params
@@ -43,33 +97,14 @@ router.delete("/:id", function(req,res){
 
 
 
-router.post("/", function(req, res){
-  var body = req.body;
-  console.log(body);
-
-  var newCart = new CartModel(body);
-  newCart.save(function(err,doc){
-    if(err){
-      console.log(err);
-      res.send(err);
-    } else{
-      console.log(doc);
-      res.json(doc);
-    }
-
-  })
-});
-
-router.get('/', function(req, res){
-  // get/find all cart items
-  CartModel.find({}, function(err,docs){
-    if(err){
-      console.log(err);
-      res.send(err);
-    } else{
-      res.json(docs);
-    }
-  });
+router.get('/', function(req, res, next) {
+  var current = req.session.user;
+  if (current){
+      res.render('index', { title: 'Food Ordering Website', h1: 'Menu', user: req.session.user, bool: true });
+  } else{
+    req.session.destroy()
+    res.render('index', { title: 'Food Ordering Website', h1: 'Menu', user: false, bool: false});
+  }
 });
 
 

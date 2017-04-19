@@ -11,13 +11,13 @@ router.post('/', function(req, res){
   console.log(body);
   // create new menu item with post request
   var newUser = new UserModel(body);
-  newUser.save(function(err, doc){
+  newUser.save(function(err, newuser){
     if (err){
       console.log(err);
       res.send(err);
     } else{
-      console.log(doc);
-      res.json(doc);
+      console.log(newuser);
+      res.send(newuser._id);
     }
   });
 });
