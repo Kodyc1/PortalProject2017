@@ -1,4 +1,6 @@
 var assert = require('assert');
+var chai = require('chai');
+
 var UserModel = require("../models/user");
 
 
@@ -10,6 +12,17 @@ describe('Array', function(){
   });
 });
 
+
+describe("users", function(){
+  it('should list ALL menu on /menu GET', function(done) {
+    chai.request("http:localhost:3000/menu")
+      .get('/')
+      .end(function(err, res){
+        // res.should.have.status(200);
+        done();
+      });
+  });
+});
 
 describe('User', function(){
   describe("#save()", function(){
