@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <% include head.ejs %>
+
+<head>
+  <% include head.ejs %>
     <link rel='stylesheet' href="style.css" />
-  </head>
-  <body>
+</head>
 
-    <!-- Modal -->
-    <div class="modalContainer">
-      <div class="modal-header">
-          <span class="close">&times;</span>
-          <h2>Details</h2>
-      </div>
-      <div class="modal-body">
-        <div id = "ingredients"></div>
-        <div id = "price"></div>
-      </div>
-      <div class="modal-footer">
-      </div>
+<body>
+
+  <!-- Modal -->
+  <div class="modalContainer">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Details</h2>
     </div>
+    <div class="modal-body">
+      <div id="ingredients"></div>
+      <div id="price"></div>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>
 
-    <!-- header -->
-    <% include header.ejs %>
+  <!-- header -->
+  <% include header.ejs %>
 
     <!-- Menu -->
     <div class="menu-container">
@@ -30,99 +32,89 @@
     <!-- footer -->
     <% include footer.ejs %>
 
-    <script>
-
-    var menu = [];
-    var quantity = [];
-    $.ajax({
-      url: "http://localhost:3000/menu/",
-      type: "GET",
-      success:(function(e){
-        menu = e;
-        // console.log(menu)
-        // Select menu Container
-        var menuContainer = $('.menu-container');
-
-        // Loop through menu in database
-        for (var i = 0; i < menu.length; i++){
-
-            var item = menu[i];
-
-            // Create menu item with title and menu id
-            var container = $('<div/>').addClass('menu-item');
-
-            var title = $('<div/>').addClass('title').html(item.title);
-            var itemEle = $('<div/>')
-                          .addClass('item')
-                          .attr("id", `menu-${i}`);
-
-            // insert image
-            var image = $('<img/>').attr("src", item.img).attr("data-imgindex", i);
-            itemEle.append(image);
-
-            var button = $('<button/>').addClass("button").addClass("button" + i).html("Add to Cart");
-
-            container.append(title).append(itemEle).append(button.clone());
-
-            menuContainer.append(container);
-        }
-
-        // Create modal
-        var modalContainer = $('.modalContainer');
-
-        // console.log(menu)
-        $('.menu-item .item img').on('click', function(e){
-          // get index of item
-
-          var index = parseInt($(this).attr("data-imgindex"));
-          var item = menu[index];
-
-
-          $("#ingredients").html(`Ingredients: ${item.ingredients}`);
-          $("#price").html(`Price: \$${item.price}`);
-
-          modalContainer.css("display","block");
-        })
-
-
-      })
-    });
-
-      // current = user's current cart
-      var current = [];
-      // map of current cart and quantities
-      var cartmap = {};
-
-      //update with user quantity
-      if (<%=bool%> === false){
-          // maintain cart quantity
-          $.ajax({
-            url: "http://localhost:3000/cart",
-            type: "GET",
-            success: (function(e){
-              menu = e;
-              var c = 0;
-              for (var i = 0; i < menu.length; i++){
-                var item = menu[i];
-                c += parseInt(item["quantity"]);
-              }
-              cart.innerHTML = "Cart (" + c + ")";
-            })
-          });
-
-      } else{
-
-        // get current user's cart
+      <script>
+        // menu generation
+        var menu = [];
+        var quantity = [];
         $.ajax({
-          url: "http://localhost:3000/cart/users/",
+          url: "http://localhost:3000/menu/",
           type: "GET",
-          success: function(e){
+          success: (function(e) {
+            menu = e;
+            // console.log(menu)
+            // Select menu Container
+            var menuContainer = $('.menu-container');
+
+            // Loop through menu in database
+            for (var i = 0; i < menu.length; i++) {
+
+              var item = menu[i];
+
+              // Create menu item with title and menu id
+              var container = $('<div/>').addClass('menu-item');
+
+              var title = $('<div/>').addClass('title').html(item.title);
+              var itemEle = $('<div/>')
+                .addClass('item')
+                .attr("id", `menu-${i}`);
+
+              // insert image
+              var image = $('<img/>').attr("src", item.img).attr("data-imgindex", i);
+              itemEle.append(image);
+
+              var button = $('<button/>').addClass("button").addClass("button" + i).html("Add to Cart");
+
+              container.append(title).append(itemEle).append(button.clone());
+
+              menuContainer.append(container);
+            }
+
+            // Create modal
+            var modalContainer = $('.modalContainer');
+
+            // console.log(menu)
+            $('.menu-item .item img').on('click', function(e) {
+              // get index of item
+
+              var index = parseInt($(this).attr("data-imgindex"));
+              var item = menu[index];
+
+
+              $("#ingredients").html(`Ingredients: ${item.ingredients}`);
+              $("#price").html(`Price: \$${item.price}`);
+
+              modalContainer.css("display", "block");
+            })
+
+
+          })
+        });
+
+
+        // cart backend
+        // current = user's current cart
+        var current = [];
+        // map of current cart and quantities
+        var cartmap = {};
+
+        //update with user quantity
+        if (<%=bool%> === false) {
+          // maintain cart quantity
+          console.log("nobody logged in");
+
+        } else {
+
+          // get current user's cart
+          $.ajax({
+            url: "http://localhost:3000/cart/users/",
+            type: "GET",
+            success: function(e) {
               var c = 0;
               cart = e;
-              for (var i = 0; i < cart.length; i++){
-                if (cart[i].userId === "<%= user._id%>"){
+              for (var i = 0; i < cart.length; i++) {
+                if (cart[i].userId === "<%= user._id%>") {
                   current = cart[i].items;
-                  for (var j = 0; j < cart[i].items.length; j++){
+                  for (var j = 0; j < cart[i].items.length; j++) {
                     //console.log(current[j].quantity);
                     c += current[j].quantity;
                   }
@@ -132,104 +124,104 @@
               }
 
               // console.log(current)
-              for (var i = 0; i < current.length; i++){
-                  cartmap[current[i].info._id] = current[i].quantity;
+              for (var i = 0; i < current.length; i++) {
+                cartmap[current[i].info._id] = current[i].quantity;
               }
-          }
-        })
-      }
-
-
-      // EVENT DELEGATION
-
-      // $('.modalContainer').on('click', window, function(e){
-      //   $('.modalContainer').css("display","none");
-      // });
-
-      // close modal when close button
-      $('.modalContainer').on('click', '.close', function(e){
-        $('.modalContainer').css("display","none");
-      });
-
-
-
-      // add to cart button click event
-      $('.menu-container').on('click', ".button", function(e){
-
-
-        var button = $(this);
-
-        // increment current number
-        var cartNo = $('#cart').html();
-        var length = cartNo.length - 1;
-        var cartNumber = parseInt(cartNo.slice(6, length));
-
-        cartNumber++;
-
-        $("#cart").html("Cart (" + cartNumber + ")");
-
-        // get index of item
-        var str = $(this).attr("class");
-        var index = parseInt(str.slice(13, str.length));
-
-
-        // // user's current cart
-        // console.log(current);
-
-        //  console.log(menu[index]._id);
-
-        var items = [];
-
-
-        for (var i = 0; i < menu.length; i++){
-          //console.log(menu[i])
-          // if menu item = clicked item
-          if (menu[i]._id === menu[index]._id){
-            // if menu item in cartmap, increment and push to new cart
-            if (menu[index]._id in cartmap){
-                cartmap[menu[index]._id]++;
-                items.push({
-                  "info" : menu[index],
-                  "quantity": cartmap[menu[index]._id]
-                })
-            // else set to 0 and push to new cart
-            } else {
-                cartmap[menu[index]._id] = 1;
-                items.push({
-                  "info" : menu[index],
-                  "quantity": cartmap[menu[index]._id]
-                })
             }
-          // if menu item but not the clicked one, push to cart
-          } else{
-            if (menu[i]._id in cartmap){
-              items.push({
-                "info" : menu[i],
-                "quantity": cartmap[menu[i]._id]
-              })
-            }
-          }
+          })
         }
 
-        //console.log(cartmap)
 
-        for (var i = 0; i < items.length; i++){
-            console.log(items[i])
-        }
+        // EVENT DELEGATION
 
-        // update cart call
-        $.ajax({
-          url: "http://localhost:3000/cart/users/",
-          type: "POST",
-          data: {userId: "<%= user._id %>", items: items},
-          success: function(e){
-            //console.log(e);
-          }
+        // $('.modalContainer').on('click', window, function(e){
+        //   $('.modalContainer').css("display","none");
+        // });
+
+        // close modal when close button
+        $('.modalContainer').on('click', '.close', function(e) {
+          $('.modalContainer').css("display", "none");
         });
 
-      });
 
 
-    </script>
-  </body>
+        // add to cart button click event
+        $('.menu-container').on('click', ".button", function(e) {
+
+
+          var button = $(this);
+
+          // increment current number
+          var cartNo = $('#cart').html();
+          var length = cartNo.length - 1;
+          var cartNumber = parseInt(cartNo.slice(6, length));
+
+          cartNumber++;
+
+          $("#cart").html("Cart (" + cartNumber + ")");
+
+          // get index of item
+          var str = $(this).attr("class");
+          var index = parseInt(str.slice(13, str.length));
+
+          // // user's current cart
+          // console.log(current);
+          //  console.log(menu[index]._id);
+
+          var items = [];
+
+
+          for (var i = 0; i < menu.length; i++) {
+            //console.log(menu[i])
+            // if menu item = clicked item
+            if (menu[i]._id === menu[index]._id) {
+              // if menu item in cartmap, increment and push to new cart
+              if (menu[index]._id in cartmap) {
+                cartmap[menu[index]._id]++;
+                items.push({
+                  "info": menu[index],
+                  "quantity": cartmap[menu[index]._id]
+                })
+                // else set to 0 and push to new cart
+              } else {
+                cartmap[menu[index]._id] = 1;
+                items.push({
+                  "info": menu[index],
+                  "quantity": cartmap[menu[index]._id]
+                })
+              }
+              // if menu item but not the clicked one, push to cart
+            } else {
+              if (menu[i]._id in cartmap) {
+                items.push({
+                  "info": menu[i],
+                  "quantity": cartmap[menu[i]._id]
+                })
+              }
+            }
+          }
+
+          //console.log(cartmap)
+
+          for (var i = 0; i < items.length; i++) {
+            console.log(items[i])
+          }
+
+          // update cart call
+          $.ajax({
+            url: "http://localhost:3000/cart/users/",
+            type: "POST",
+            data: {
+              userId: "<%= user._id %>",
+              items: items
+            },
+            success: function(e) {
+              //console.log(e);
+            }
+          });
+
+        });
+      </script>
+</body>
+
 </html>

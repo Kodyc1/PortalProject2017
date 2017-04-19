@@ -97,16 +97,4 @@ router.delete("/:id", function(req,res){
 
 
 
-router.get('/', function(req, res, next) {
-  var current = req.session.user;
-  if (current){
-      res.render('index', { title: 'Food Ordering Website', h1: 'Menu', user: req.session.user, bool: true });
-  } else{
-    req.session.destroy()
-    res.render('index', { title: 'Food Ordering Website', h1: 'Menu', user: false, bool: false});
-  }
-});
-
-
-
 module.exports = router;
