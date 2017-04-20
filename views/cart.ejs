@@ -55,17 +55,18 @@
           type: "GET",
           success: function(e){
 
+
               var wholecart = e;
 
               var cart = $('.cart');
 
               cartNumber = 0;
 
-              for(var i = 0; i < wholecart.length; i++){
+              for(var j = 0; j < wholecart.length; j++){
 
-                if (wholecart[i].userId === "<%= user._id%>"){
+                if (wholecart[j].userId === "<%= user._id%>"){
 
-                    current = wholecart[i].items;
+                    current = wholecart[j].items;
 
                     for (var i = 0; i < current.length; i++){
 
@@ -161,16 +162,12 @@
         console.log(current);
 
 
-        if (<%=bool%> === false){
+        $.ajax({
+          url: "http://localhost:3000/cart/users/",
+          type: "POST",
+          data: {items: current}
+        });
 
-        } else {
-
-          $.ajax({
-            url: "http://localhost:3000/cart/users/",
-            type: "POST",
-            data: {userId: "<%= user._id %>", items: current}
-          });
-        }
 
       });
 

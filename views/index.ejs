@@ -98,38 +98,32 @@
         var cartmap = {};
 
         //update with user quantity
-        if (<%=bool%> === false) {
-          // maintain cart quantity
-          console.log("nobody logged in");
-
-        } else {
-
-          // get current user's cart
-          $.ajax({
-            url: "http://localhost:3000/cart/users/",
-            type: "GET",
-            success: function(e) {
-              var c = 0;
-              cart = e;
-              for (var i = 0; i < cart.length; i++) {
-                if (cart[i].userId === "<%= user._id%>") {
-                  current = cart[i].items;
-                  for (var j = 0; j < cart[i].items.length; j++) {
-                    //console.log(current[j].quantity);
-                    c += current[j].quantity;
-                  }
-                  $("#cart").html("Cart (" + c + ")");
-                  break;
+        // get current user's cart
+        $.ajax({
+          url: "http://localhost:3000/cart/users/",
+          type: "GET",
+          success: function(e) {
+            var c = 0;
+            cart = e;
+            for (var i = 0; i < cart.length; i++) {
+              if (cart[i].userId === "<%= user._id%>") {
+                current = cart[i].items;
+                for (var j = 0; j < cart[i].items.length; j++) {
+                  //console.log(current[j].quantity);
+                  c += current[j].quantity;
                 }
-              }
-
-              // console.log(current)
-              for (var i = 0; i < current.length; i++) {
-                cartmap[current[i].info._id] = current[i].quantity;
+                $("#cart").html("Cart (" + c + ")");
+                break;
               }
             }
-          })
-        }
+
+            // console.log(current)
+            for (var i = 0; i < current.length; i++) {
+              cartmap[current[i].info._id] = current[i].quantity;
+            }
+          }
+        })
+
 
 
         // EVENT DELEGATION
@@ -212,7 +206,6 @@
             url: "http://localhost:3000/cart/users/",
             type: "POST",
             data: {
-              userId: "<%= user._id %>",
               items: items
             },
             success: function(e) {

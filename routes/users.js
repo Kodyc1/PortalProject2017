@@ -36,7 +36,6 @@ router.post('/login', function(req, res){
 
     else{
       if (!user){
-        console.log("no");
         res.send(false);
       }else{
         user.comparePassword(req.body["password"], function(err, match){
@@ -44,7 +43,6 @@ router.post('/login', function(req, res){
           if (err) {
             res.status(401).send();
           }
-
           req.session.user = user;
           //console.log(req.session.user);
           res.send(match);
@@ -55,34 +53,6 @@ router.post('/login', function(req, res){
 
 });
 
-
-router.patch("/:id", function(req,res){
-  var body = req.body;
-  console.log(body);
-  var id = req.params.id;
-  UserModel.findByIdAndUpdate(id, { $set: {one: body["one"], two: body["two"], three: body["three"], four: body["four"]} },
-                                    {new: true}, function(err,doc){
-      if(err){
-        console.log(err);
-        res.send(err);
-      }  else{
-        res.json(body);
-      }
-  })
-});
-
-
-router.patch("/current/:id", function(req,res){
-  var id = req.params.id;
-  UserModel.findOne({_id:id}, function(err, doc){
-    if (err){
-      console.log(err);
-      res.send(err);
-    } else{
-      res.json(doc);
-    }
-  })
-})
 
 
 /* GET users listing. */

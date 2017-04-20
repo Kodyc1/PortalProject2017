@@ -40,11 +40,14 @@ router.get('/users', function(req, res){
 router.post("/users", function(req, res){
   var body = req.body;
 
-  console.log(body.items);
-  //
+  var id = req.session.user._id;
+
+  //console.log(body.items);
+
   // res.send(body);
 
-  CartModel.findOneAndUpdate( { userId: body.userId },
+
+  CartModel.findOneAndUpdate( {userId: id},
                               {items: body.items},
                               {upsert:true} )
     .then (function(updatedCart){
