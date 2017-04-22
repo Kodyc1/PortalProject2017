@@ -69,15 +69,16 @@
 
     <div class="button">
       <button onclick="validateForm()">
-        <!-- <a href="C:/Users/Kody/OneDrive/Documents/PortalProject2017/confirmation.html">Pay</a> -->
-        Pay
+        <a href="/receipt">Pay</a>
       </button>
     </div>
 
 
 
   <script>
+
     function validateForm() {
+
       var payment_type = document.forms["payment"]["type"].value;
       var credit_card = document.querySelector('input[type="credit card"]').value;
       var exp = document.querySelector('input[type="month"]').value;
@@ -128,6 +129,51 @@
         return false;
       }
     }
+
+
+    $('body').on('click','.button', function(e){
+
+      dstreet = document.querySelector('input[type="dstreet"]').value;
+      dcity = document.querySelector('input[type="dcity"]').value;
+      dstate = document.querySelector('input[type="dstate"]').value;
+      dzip = document.querySelector('input[type="dzip"]').value;
+
+
+      var current = [];
+
+      $.ajax({
+        url: "http://localhost:3000/cart/users/",
+        type: "GET",
+        success: function(e){
+
+            var wholecart = e;
+
+            for(var j = 0; j < wholecart.length; j++){
+              if (wholecart[j].userId === "<%= user._id%>"){
+                  current = wholecart[j].items;
+              }
+            }
+            console.log(current);
+
+            $.ajax({
+              url:"http://localhost:3000/checkout/",
+              type:"POST",
+              data: {cart: current,
+                     street: dstreet,
+                     city: dcity,
+                     state: dstate,
+                     zipcode: dzip
+                   },
+              success: function(e){
+                console.log(e);
+              }
+
+            })
+        }
+      })
+
+    })
+
 
   </script>
 

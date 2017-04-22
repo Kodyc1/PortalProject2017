@@ -16,7 +16,6 @@ var port = 3001;
 //   });
 // });
 
-
 describe("Menu API", function(){
   before(function(){
     console.log(`Attempting to start server on port ${port}`)
@@ -83,7 +82,7 @@ describe("Register a new user", function(done){
 
 // create new cart for a user by POSTing to /cart/
 // data {userId: id, items: []}
-describe("create new user's cart", function(done){
+describe("Create new user's cart", function(done){
   let agent = null;
   before(function(done){
     console.log(`Attempting to start server on port ${port}`)
@@ -115,7 +114,7 @@ describe("create new user's cart", function(done){
 
 // update cart for a user by POSTing to /cart/
 // data {userId: id, hardcoded items}
-describe("update user's cart", function(done){
+describe("Update user's cart", function(done){
   let agent = null;
   before(function(done){
     console.log(`Attempting to start server on port ${port}`)
@@ -148,8 +147,6 @@ describe("update user's cart", function(done){
         }
     ]})
       .end(function(err, res){
-
-
         done();
       })
   })

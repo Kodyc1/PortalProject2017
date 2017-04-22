@@ -46,7 +46,6 @@ router.post("/users", function(req, res){
 
   // res.send(body);
 
-
   CartModel.findOneAndUpdate( {userId: id},
                               {items: body.items},
                               {upsert:true} )

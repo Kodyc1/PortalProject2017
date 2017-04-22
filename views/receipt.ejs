@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include head.ejs %>
+
+    <link rel='stylesheet' href="cart.css" />
+  </head>
+
+  <body>
+    <!-- header -->
+    <% include header.ejs %>
+
+    <table align="center">
+      <thead>
+        <tr>
+          <th colspan=4>Summary</th>
+        </tr>
+        <tr>
+          <th colspan=2>Item</th>
+          <th>Quantity</th>
+          <th>Cost</th>
+        </tr>
+      </thead>
+
+
+      <tbody class="cart">
+      </tbody>
+
+      <tfoot>
+        <tr id="total">
+          <td colspan=3>Total</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <h2>Delivered to:</h2>
+    <div class="address">
+    </div>
+
+
+  <script>
+
+    var current = [];
+
+    $.ajax({
+      url: "http://localhost:3000/cart/users/",
+      type: "GET",
+      success: function(e){
+
+          var wholecart = e;
+
+          var cart = $('.cart');
+
+          cartNumber = 0;
+
+          for(var j = 0; j < wholecart.length; j++){
+
+            if (wholecart[j].userId === "<%= user._id%>"){
+
+                current = wholecart[j].items;
+
+                for (var i = 0; i < current.length; i++){
+
+                  if (current[i].quantity > 0){
+                    var row = document.createElement('tr');
+                    row.id = i;
+
+                    var image = document.createElement("td");
+                    image.className = "image";
+
+                    var img = document.createElement('img');
+                    img.src = current[i].info.img;
+                    image.appendChild(img);
+
+                    var title = document.createElement("td");
+                    title.className = "title";
+                    title.innerHTML = current[i].info.title;
+
+                    var quantity = document.createElement("td");
+                    quantity.innerHTML = current[i].quantity;
+
+                    var cost = document.createElement("td");
+                    cost.innerHTML = '$' + (current[i].quantity * current[i].info.price) + ".00";
+
+                    row.append(image);
+                    row.append(title);
+                    row.append(quantity);
+                    row.append(cost);
+
+                    cart.append(row);
+
+                    cartNumber += parseInt(current[i].quantity);
+                  }
+                }
+              }
+            }
+
+            var number = 0;
+            for (var i = 0; i < current.length; i++){
+              number += parseInt(current[i].info.price) * parseInt(current[i].quantity);
+            }
+            var tnumber = Math.round(.0725*(number)*100)/100;
+
+            var total = document.querySelector("#total");
+            var tot = document.createElement("td");
+            tot.innerHTML = "$" + (number + tnumber);
+            total.appendChild(tot);
+
+            $("#cart").html("Cart (" + cartNumber + ")");
+      }
+    })
+
+    $.ajax({
+      url: "http://localhost:3000/checkout/receipt",
+      type: "POST",
+      success: function(e){
+
+          var delivery_info = e;
+          console.log(e);
+
+
+      }
+
+    })
+
+
+
+  </script>
+  </body>
+</html>

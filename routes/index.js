@@ -32,9 +32,24 @@ router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Register', h1: 'Sign Up', user: {"_id":"58f807ea7087250b942a99ef"} });
 });
 
-router.get('/checkout', function(req, res, next) {
-  res.render('checkout', { title: 'Checkout', h1: 'Checkout', user: req.session.user });
+router.get('/checkouts', function(req, res, next) {
+  var current = req.session.user;
+  if (current){
+      res.render('checkout', { title: 'Checkout', h1: 'Checkout', user: req.session.user});
+  } else{
+    req.session.destroy()
+    res.render('checkout', { title: 'Food Ordering Website', h1: 'Menu', user: {"_id":"58f807ea7087250b942a99ef"}});
+  }
 });
 
+router.get('/receipt', function(req,res,next){
+  var current = req.session.user;
+  if (current){
+      res.render('receipt', { title: 'Receipt', h1: 'Receipt', user: req.session.user});
+  } else{
+    req.session.destroy()
+    res.render('receipt', { title: 'Receipt', h1: 'Receipt', user: {"_id":"58f807ea7087250b942a99ef"}});
+  }
+});
 
 module.exports = router;
