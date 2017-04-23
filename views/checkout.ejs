@@ -46,6 +46,9 @@
         </tr>
       </table>
 
+      <p>Phone Number</p>
+      <p><input name="phone" type="text" placeholder='Phone Number' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'" /></p>
+
       <p>Billing Address</p>
       <p><input type="bstreet" placeholder="Street" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Street'" style="width:531px"/></p>
       <p><input type="bcity" placeholder="City" onfocus="this.placeholder = ''" onblur="this.placeholder = 'City'" />
@@ -68,8 +71,8 @@
     </div>
 
     <div class="button">
-      <button onclick="validateForm()">
-        <a href="/receipt">Pay</a>
+      <button>
+        Pay
       </button>
     </div>
 
@@ -77,7 +80,8 @@
 
   <script>
 
-    function validateForm() {
+
+    $('body').on('click','.button', function(e){
 
       var payment_type = document.forms["payment"]["type"].value;
       var credit_card = document.querySelector('input[type="credit card"]').value;
@@ -85,6 +89,7 @@
       var cv = document.querySelector('input[type="cv"]').value;
       var first = document.querySelector('input[name="first"]').value;
       var last = document.querySelector('input[name="last"]').value;
+      var phone = document.querySelector('input[name="phone"]').value;
 
       var bstreet = document.querySelector('input[type="bstreet"]').value;
       var bcity = document.querySelector('input[type="bcity"]').value;
@@ -128,50 +133,45 @@
         alert("invalid delivery address");
         return false;
       }
-    }
+      else {
 
+        var current = [];
 
-    $('body').on('click','.button', function(e){
+        $.ajax({
+          url: "http://localhost:3000/cart/users/",
+          type: "GET",
+          success: function(e){
 
-      dstreet = document.querySelector('input[type="dstreet"]').value;
-      dcity = document.querySelector('input[type="dcity"]').value;
-      dstate = document.querySelector('input[type="dstate"]').value;
-      dzip = document.querySelector('input[type="dzip"]').value;
+              var wholecart = e;
 
-
-      var current = [];
-
-      $.ajax({
-        url: "http://localhost:3000/cart/users/",
-        type: "GET",
-        success: function(e){
-
-            var wholecart = e;
-
-            for(var j = 0; j < wholecart.length; j++){
-              if (wholecart[j].userId === "<%= user._id%>"){
-                  current = wholecart[j].items;
+              for(var j = 0; j < wholecart.length; j++){
+                if (wholecart[j].userId === "<%= user._id%>"){
+                    current = wholecart[j].items;
+                }
               }
-            }
-            console.log(current);
+              console.log(current);
 
-            $.ajax({
-              url:"http://localhost:3000/checkout/",
-              type:"POST",
-              data: {cart: current,
-                     street: dstreet,
-                     city: dcity,
-                     state: dstate,
-                     zipcode: dzip
-                   },
-              success: function(e){
-                console.log(e);
-              }
+              $.ajax({
+                url:"http://localhost:3000/checkout/",
+                type:"POST",
+                data: {cart: current,
+                       fname: first,
+                       lname: last,
+                       phone: phone,
+                       street: dstreet,
+                       city: dcity,
+                       state: dstate,
+                       zipcode: dzip
+                     },
+                success: function(e){
+                  console.log(e);
+                }
 
-            })
-        }
-      })
-
+              })
+          }
+        })
+      window.location.replace('/receipt')
+      }
     })
 
 

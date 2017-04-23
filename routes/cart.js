@@ -81,9 +81,9 @@ router.patch('/:id', function(req, res){
 
 
 
-router.delete("/:id", function(req,res){
+router.delete("/users", function(req,res){
 
-  var id = req.params.id.toString();
+  var id = req.session.user._id;
 
   CartModel.remove({"_id":id},function(err, doc){
     if(err){

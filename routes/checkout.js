@@ -11,6 +11,9 @@ router.post('/', function(req, res){
   var id = req.session.user._id;
 
   var newCheckout = new CheckoutModel({userId: id,
+                                        fname: body.fname,
+                                        lname: body.lname,
+                                        phone: body.phone,
                                         cart: body.cart,
                                         street: body.street,
                                         city: body.city,
@@ -32,7 +35,7 @@ router.post('/receipt', function(req,res){
 
     var id = req.session.user._id;
 
-    CheckoutModel.findOne({userId: id}, function(err, obj){
+    CheckoutModel.find({userId: id}, function(err, obj){
 
       if(err){
         res.send(err);
@@ -50,6 +53,7 @@ router.get('/', function(req,res){
     if(err){
       res.send(err);
     } else{
+      console.log(obj)
       res.json(obj);
     }
   })

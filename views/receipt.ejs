@@ -13,7 +13,7 @@
     <table align="center">
       <thead>
         <tr>
-          <th colspan=4>Summary</th>
+          <th colspan=5>Order Summary</th>
         </tr>
         <tr>
           <th colspan=2>Item</th>
@@ -89,7 +89,7 @@
 
                     cart.append(row);
 
-                    cartNumber += parseInt(current[i].quantity);
+                    cartNumber += current[i].quantity;
                   }
                 }
               }
@@ -115,9 +115,24 @@
       type: "POST",
       success: function(e){
 
-          var delivery_info = e;
-          console.log(e);
+          var delivery_info = e[e.length-1];
+          console.log(delivery_info);
 
+          var address = $('.address')
+          var name = `${delivery_info.fname} ${delivery_info.lname}`
+          var details = `${delivery_info.street} ${delivery_info.city}, ${delivery_info.state} ${delivery_info.zipcode}`
+          var paragraph = document.createElement("p");
+          var p = document.createElement("p");
+          p.append(name);
+          paragraph.append(details);
+          address.append(p);
+          address.append(paragraph);
+
+          $.ajax({
+            url: "http://localhost:3000/cart/users/",
+            type: "POST",
+            data: {items: []}
+          });
 
       }
 

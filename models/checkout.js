@@ -10,6 +10,9 @@ var item = {
 var schema = {
     userId: String,
     cart: [item],
+    fname: String,
+    lname: String,
+    phone: String,
     street: String,
     city: String,
     state: String,

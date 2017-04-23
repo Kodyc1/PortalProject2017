@@ -42,7 +42,9 @@
     </div>
 
     <div class="button">
-        <a href="/checkouts"><button>Checkout</button></a>
+      <div class="checkout">
+        <button id="checkout">Checkout</button>
+      </div>
     </div>
 
 
@@ -139,6 +141,19 @@
           }
 
       });
+
+
+      $('.checkout').on('click', '#checkout', function(e){
+        var cartNo = $('#cart').html();
+        var length = cartNo.length - 1;
+        var cartNumber = parseInt(cartNo.slice(6, length));
+        if (cartNumber > 0){
+          window.location = '/checkouts'
+        }
+        else{
+          window.location = '/carts'
+        }
+      })
 
 
       $('.cart').on('click','.button', function(e){

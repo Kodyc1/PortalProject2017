@@ -46,6 +46,14 @@ h1{
   padding-left: 2em;
 }
 
+h2{
+  margin-top: 1em;
+  padding-left: 2em;
+}
+
+p{
+  padding-left: 3em;
+}
 
 table{
   border-collapse: collapse;
