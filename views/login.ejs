@@ -10,29 +10,65 @@
     <!-- header -->
     <% include header.ejs %>
 
-    <div id="bulk">
-      <div class="input">
-        <p>Email:</p>
-        <p><input id="email" type="username"></p>
+    <div class="form">
 
-        <p>Password:</p>
-        <p><input id="password" type="password"></p>
-      </div>
+        <div class="field-wrap">
+          <label>
+            Email<span class="req">*</span>
+          </label>
+          <input id="email" type="text" required autocomplete="off"/>
+        </div>
 
-      <div class="button">
-        <button>
-          Login
-        </button>
-      </div>
-      <div class="register">
-        <p>New User? <a href="/register"><span>Register here.</span></a></p>
-      </div>
-    </div>
+        <div class="field-wrap">
+          <label>
+            Password<span class="req">*</span>
+          </label>
+          <input id="password" type="password" required autocomplete="off"/>
+        </div>
+
+        <button type="submit" class="button button-block"/>Login</button>
+
+        <div class="login">
+          <p>New User? <a href="/register"> <span>Log in here.</span></a></p>
+        </div>
+        
+  </div>
+
+
 
 
     <script>
 
-        $('.button').on('click', 'button', function(e){
+        $('.form').find('input, textarea').on('keyup blur focus', function (e) {
+
+          var $this = $(this),
+              label = $this.prev('label');
+
+            if (e.type === 'keyup') {
+              if ($this.val() === '') {
+                  label.removeClass('active highlight');
+                } else {
+                  label.addClass('active highlight');
+                }
+            } else if (e.type === 'blur') {
+              if( $this.val() === '' ) {
+                label.removeClass('active highlight');
+              } else {
+                label.removeClass('highlight');
+              }
+            } else if (e.type === 'focus') {
+
+              if( $this.val() === '' ) {
+                label.removeClass('highlight');
+              }
+              else if( $this.val() !== '' ) {
+                label.addClass('highlight');
+              }
+            }
+
+        });
+
+        $('.form').on('click', 'button', function(e){
 
           var pass = $('#password').val();
 
