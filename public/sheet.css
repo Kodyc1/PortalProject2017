@@ -1,0 +1,52 @@
+*{
+  font-family: "Cambria";
+}
+
+body{
+  background-color: lightgrey;
+}
+
+header{
+  background-color: #1b1b1b;
+  width:100%;
+}
+
+ul{
+  margin-bottom: 0;
+  padding: 0;
+}
+
+header li{
+  color: white;
+  display: inline-block;
+  padding: 2em;
+  margin: 0;
+  padding-left: 3em;
+  padding-right: 3em;
+  font-size: 1.5em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none; /* no underline */
+}
+
+header li:hover{
+  background-color: white;
+  color: black;
+  transition: 0.5s;
+}
+
+h1{
+  padding-left: 2em;
+  margin-top: 1em;
+  /*border: 2px solid;*/
+}
+
+#float, #cart{
+  float: right;
+}
+
+.navbar{
+  border: 0;
+}

@@ -111,7 +111,7 @@
                   //console.log(current[j].quantity);
                   c += current[j].quantity;
                 }
-                $("#cart").html("Cart (" + c + ")");
+                $("#cart").html("<a href=\"/carts\">Cart (" + c + ")<\a>");
                 break;
               }
             }
@@ -144,13 +144,13 @@
           var button = $(this);
 
           // increment current number
-          var cartNo = $('#cart').html();
+          var cartNo = $('#cart a').html();
           var length = cartNo.length - 1;
           var cartNumber = parseInt(cartNo.slice(6, length));
 
           cartNumber++;
 
-          $("#cart").html("Cart (" + cartNumber + ")");
+          $("#cart").html("<a href=\"/carts\">Cart (" + cartNumber + ")<\a>");
 
           // get index of item
           var str = $(this).attr("class");

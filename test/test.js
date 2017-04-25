@@ -151,3 +151,13 @@ describe("Update user's cart", function(done){
       })
   })
 })
+
+
+// test checkout API
+describe("Add to checkout order list", function(done){
+
+
+
+
+  
+})

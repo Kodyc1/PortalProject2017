@@ -18,14 +18,15 @@
         <input type="radio" name="type" value="ca"> Cash
       </form>
 
-      <p>Credit / Debit Card Number</p>
-      <p><input type="credit card" style="width:376px"></p>
+
+      <label>Credit / Debit Card Number</label>
+      <input type="credit card"/>
 
       <table>
         <tr>
           <td>
-            <p>Expiration date</p>
-            <p><input type="month"></p>
+            <label>Expiration date</label>
+            <input type="month"/>
           </td>
           <td>
             <p>CV number</p>
@@ -50,7 +51,7 @@
       <p><input name="phone" type="text" placeholder='Phone Number' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'" /></p>
 
       <p>Billing Address</p>
-      <p><input type="bstreet" placeholder="Street" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Street'" style="width:531px"/></p>
+      <p><input type="bstreet" placeholder="Street" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Street'"/></p>
       <p><input type="bcity" placeholder="City" onfocus="this.placeholder = ''" onblur="this.placeholder = 'City'" />
         <input type="bstate" maxlength="2" placeholder="State" onfocus="this.placeholder = ''" onblur="this.placeholder = 'State'" />
         <input type="bzip"  maxlength="5" placeholder="Zipcode" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Zipcode'" /></p>
@@ -59,7 +60,7 @@
       </br>
 
       <p>Delivery Address</p>
-      <p><input type="dstreet" placeholder="Street" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Street'" style="width:531px"/></p>
+      <p><input type="dstreet" placeholder="Street" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Street'"/></p>
       <p><input type="dcity" placeholder="City" onfocus="this.placeholder = ''" onblur="this.placeholder = 'City'" />
         <input type="dstate" maxlength="2" placeholder="State" onfocus="this.placeholder = ''" onblur="this.placeholder = 'State'" />
         <input type="dzip"  maxlength="5" placeholder="Zipcode" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Zipcode'" /></p>
@@ -79,6 +80,26 @@
 
 
   <script>
+
+    $.ajax({
+      url: "http://localhost:3000/cart/users/",
+      type: "GET",
+      success: function(e) {
+        var c = 0;
+        cart = e;
+        for (var i = 0; i < cart.length; i++) {
+          if (cart[i].userId === "<%= user._id%>") {
+            current = cart[i].items;
+            for (var j = 0; j < cart[i].items.length; j++) {
+              //console.log(current[j].quantity);
+              c += current[j].quantity;
+            }
+            $("#cart").html("<a href=\"/carts\">Cart (" + c + ")<\a>");
+            break;
+          }
+        }
+      }
+    })
 
 
     $('body').on('click','.button', function(e){
@@ -149,7 +170,7 @@
                     current = wholecart[j].items;
                 }
               }
-              console.log(current);
+              //console.log(current);
 
               $.ajax({
                 url:"http://localhost:3000/checkout/",
@@ -164,7 +185,7 @@
                        zipcode: dzip
                      },
                 success: function(e){
-                  console.log(e);
+                  //console.log(e);
                 }
 
               })
