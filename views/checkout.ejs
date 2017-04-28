@@ -4,6 +4,7 @@
     <% include head.ejs %>
 
     <link rel='stylesheet' href="checkoutstyle.css" />
+
   </head>
 
   <body>
@@ -16,41 +17,86 @@
       <form name="payment">
         <input type="radio" name="type" value="cc"> Credit / Debit Card
         <input type="radio" name="type" value="ca"> Cash
-      </form>
 
+        <div class="container">
+          <div class="row">
+            <div class="span12">
+              <form class="form-horizontal span6">
+                <fieldset>
+                  <div class="control-group">
+                    <label class="control-label">Name</label>
+                    <div class="controls">
+                      <input type="text" name="first" class="input-block-level" pattern="\w+ \w+.*" title="Fill your first and last name" required>
+                    </div>
+                  </div>
 
-      <label>Credit / Debit Card Number</label>
-      <input type="credit card"/>
+                  <div class="control-group">
+                    <label class="control-label">Card Number</label>
+                    <div class="controls">
+                      <div class="row-fluid">
+                        <div class="span3">
+                          <input class="input-block-level" type="credit card" autocomplete="off" maxlength="16" title="Credit Card Number">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-      <table>
-        <tr>
-          <td>
-            <label>Expiration date</label>
-            <input type="month"/>
-          </td>
-          <td>
-            <p>CV number</p>
-            <p><input maxlength="3" type="cv"></p>
-          </td>
-        </tr>
-      </table>
+                  <div class="control-group">
+                    <label class="control-label">Card Expiration Date</label>
+                    <div class="controls">
+                      <div class="row-fluid">
+                        <div class="span9">
+                          <select class="input-block-level">
+                            <option>January</option>
+                            <option>February</option>
+                            <option>March</option>
+                            <option>April</option>
+                            <option>May</option>
+                            <option>June</option>
+                            <option>July</option>
+                            <option>August</option>
+                            <option>September</option>
+                            <option>October</option>
+                            <option>November</option>
+                            <option>December</option>
+                          </select>
+                        </div>
+                        <div class="span3">
+                          <select class="input-block-level">
+                            <option>2017</option>
+                            <option>2018</option>
+                            <option>2019</option>
+                            <option>2020</option>
+                            <option>2021</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-      <p>Name</p>
-      <table>
-        <tr>
-          <td>
-            <p><input name="first" type="text" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" /></p>
-          </td>
-          <td>
-            <p><input name="last" type="text" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'" /></p>
-          </td>
-        </tr>
-      </table>
+                  <div class="control-group">
+                    <label class="control-label">Card CVV</label>
+                    <div class="controls">
+                      <div class="row-fluid">
+                        <div class="span3">
+                          <input type="cv" class="input-block-level" autocomplete="off" maxlength="3" pattern="\d{3}" title="Three digits at back of your card" required>
+                        </div>
+                        <div class="span8">
+                          <!-- screenshot may be here -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
 
-      <p>Phone Number</p>
+      <label class="p">Phone Number</label>
       <p><input name="phone" type="text" placeholder='Phone Number' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'" /></p>
 
-      <p>Billing Address</p>
+      <label class="p">Billing Address</label>
       <p><input type="bstreet" placeholder="Street" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Street'"/></p>
       <p><input type="bcity" placeholder="City" onfocus="this.placeholder = ''" onblur="this.placeholder = 'City'" />
         <input type="bstate" maxlength="2" placeholder="State" onfocus="this.placeholder = ''" onblur="this.placeholder = 'State'" />
@@ -59,22 +105,22 @@
       </br>
       </br>
 
-      <p>Delivery Address</p>
+      <label class="p">Delivery Address</label>
       <p><input type="dstreet" placeholder="Street" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Street'"/></p>
       <p><input type="dcity" placeholder="City" onfocus="this.placeholder = ''" onblur="this.placeholder = 'City'" />
         <input type="dstate" maxlength="2" placeholder="State" onfocus="this.placeholder = ''" onblur="this.placeholder = 'State'" />
         <input type="dzip"  maxlength="5" placeholder="Zipcode" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Zipcode'" /></p>
 
 
-      <p>Delivery Comments</p>
+      <label class="p">Delivery Comments</label>
       <p><textarea rows="4" cols="50" style="margin: 0px; width: 527px; height: 152px;"></textarea></p>
 
+
+      </form>
     </div>
 
     <div class="button">
-      <button>
-        Pay
-      </button>
+      <button>Pay</button>
     </div>
 
 
@@ -106,10 +152,10 @@
 
       var payment_type = document.forms["payment"]["type"].value;
       var credit_card = document.querySelector('input[type="credit card"]').value;
-      var exp = document.querySelector('input[type="month"]').value;
+      //var exp = document.querySelector('input[type="month"]').value;
       var cv = document.querySelector('input[type="cv"]').value;
       var first = document.querySelector('input[name="first"]').value;
-      var last = document.querySelector('input[name="last"]').value;
+      // var last = document.querySelector('input[name="last"]').value;
       var phone = document.querySelector('input[name="phone"]').value;
 
       var bstreet = document.querySelector('input[type="bstreet"]').value;
@@ -146,7 +192,7 @@
           return false;
         }
       }
-      if (first == "" || last == ""){
+      if (first == ""){
         alert("please enter first and last name");
         return false;
       }
@@ -177,7 +223,7 @@
                 type:"POST",
                 data: {cart: current,
                        fname: first,
-                       lname: last,
+                       lname: "",
                        phone: phone,
                        street: dstreet,
                        city: dcity,

@@ -26,11 +26,14 @@ textarea{
   padding-left: 2em;
   background-color: beige;
   border-radius: 10px;
-  width: 40%;
+  width: 811px;
   margin: 3em;
   margin-bottom: 1em;
 }
 
+.p{
+  padding-left:2em;
+}
 button{
   padding: 1em;
   margin: 2em;

@@ -155,9 +155,51 @@ describe("Update user's cart", function(done){
 
 // test checkout API
 describe("Add to checkout order list", function(done){
-
-
-
-
-  
+  let agent = null;
+  before(function(done){
+    console.log(`Attempting to start server on port ${port}`)
+    require('../bin/www');
+    agent = request.agent();
+    agent
+      .post(`http://localhost:${port}/users/login`)
+      .send({username: 'a@a.com', password: 'a'})
+      .then(function(err,res){
+        done();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  })
+  it('adds to the list of order receipts POST', function(done){
+    agent
+      .post(`http://localhost:${port}/checkout`)
+      .send({ cart: [
+                  {
+                      "quantity" : 2,
+                      "info" : {
+                          "_id" : "58efe747ab2e182b18265031",
+                          "title" : "Bibimbap",
+                          "img" : "Pics/bibimbap.jpg",
+                          "price" : "15",
+                          "ingredients" : "Rice, Spinach, Beef, Egg, Carrots, Bean Sprouts",
+                          "__v" : "0"
+                      }
+                  }
+              ],
+              fname: "me desu",
+              lname: "",
+              phone: "510-254-1241",
+              street: "214 newhall drive",
+              city: "irvine",
+              state: "ca",
+              zipcode: "94244"
+      })
+      .then(function(err,res){
+        console.log("created new receipt")
+        done();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  })
 })

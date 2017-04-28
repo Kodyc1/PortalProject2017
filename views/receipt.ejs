@@ -121,12 +121,16 @@
           var address = $('.address')
           var name = `${delivery_info.fname} ${delivery_info.lname}`
           var details = `${delivery_info.street} ${delivery_info.city}, ${delivery_info.state} ${delivery_info.zipcode}`
+          var phone = `Expect a delivery text to (if entered): ${delivery_info.phone}`
+          var ph = document.createElement("p");
           var paragraph = document.createElement("p");
           var p = document.createElement("p");
           p.append(name);
           paragraph.append(details);
+          ph.append(phone);
           address.append(p);
           address.append(paragraph);
+          address.append(ph);
 
           $.ajax({
             url: "http://localhost:3000/cart/users/",
