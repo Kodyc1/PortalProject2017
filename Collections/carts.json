@@ -1,6 +1,6 @@
 { 
-    "_id" : ObjectId("58f6b2897675fb11785fad67"), 
-    "userId" : "58f6b2897675fb11785fad66", 
+    "_id" : ObjectId("58fc66a5e845e1090425bc0d"), 
+    "userId" : "58fc66a5e845e1090425bc0c", 
     "items" : [
         {
             "quantity" : NumberInt(2), 
@@ -12,42 +12,19 @@
                 "ingredients" : "Rice, Spinach, Beef, Egg, Carrots, Bean Sprouts", 
                 "__v" : "0"
             }, 
-            "_id" : ObjectId("58f6b99c7675fb11785fad86")
-        }, 
+            "_id" : ObjectId("58fc66a7e845e1090425bc0f")
+        }
+    ], 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5903ef1a5fe8eb383cff0aaf"), 
+    "userId" : "5903ef1a5fe8eb383cff0aae", 
+    "coupon" : "", 
+    "items" : [
         {
             "quantity" : NumberInt(1), 
             "info" : {
-                "_id" : "58efc7be16e26f1a14f0425b", 
-                "title" : "Steak", 
-                "img" : "Pics/steak.jpg", 
-                "price" : "20", 
-                "ingredients" : "Beef", 
-                "__v" : "0"
-            }, 
-            "_id" : ObjectId("58f6b99c7675fb11785fad85")
-        }, 
-        {
-            "quantity" : NumberInt(2), 
-            "info" : {
-                "_id" : "58efc7f316e26f1a14f0425d", 
-                "title" : "Brownie", 
-                "img" : "Pics/brownie.jpg", 
-                "price" : "5", 
-                "ingredients" : "Sugar, Chocolate, Egg", 
-                "__v" : "0"
-            }, 
-            "_id" : ObjectId("58f6b99c7675fb11785fad84")
-        }
-    ], 
-    "__v" : NumberInt(0)
-}
-{ 
-    "_id" : ObjectId("58f6b9a47675fb11785fad88"), 
-    "userId" : "58f6b9a47675fb11785fad87", 
-    "items" : [
-        {
-            "quantity" : NumberInt(2), 
-            "info" : {
                 "_id" : "58efc78c16e26f1a14f0425a", 
                 "title" : "Bibimbap", 
                 "img" : "Pics/bibimbap.jpg", 
@@ -55,10 +32,17 @@
                 "ingredients" : "Rice, Spinach, Beef, Egg, Carrots, Bean Sprouts", 
                 "__v" : "0"
             }, 
-            "_id" : ObjectId("58f6bf87f93c283e3404b0e1")
-        }, 
+            "_id" : ObjectId("5903ef1c5fe8eb383cff0ab0")
+        }
+    ], 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5903ef455fe8eb383cff0ab2"), 
+    "userId" : "5903ef455fe8eb383cff0ab1", 
+    "coupon" : "", 
+    "items" : [
         {
-            "quantity" : NumberInt(2), 
             "info" : {
                 "_id" : "58efc7be16e26f1a14f0425b", 
                 "title" : "Steak", 
@@ -67,143 +51,8 @@
                 "ingredients" : "Beef", 
                 "__v" : "0"
             }, 
-            "_id" : ObjectId("58f6bf87f93c283e3404b0e0")
-        }, 
-        {
             "quantity" : NumberInt(1), 
-            "info" : {
-                "_id" : "58efc7f316e26f1a14f0425d", 
-                "title" : "Brownie", 
-                "img" : "Pics/brownie.jpg", 
-                "price" : "5", 
-                "ingredients" : "Sugar, Chocolate, Egg", 
-                "__v" : "0"
-            }, 
-            "_id" : ObjectId("58f6bf87f93c283e3404b0df")
-        }
-    ], 
-    "__v" : NumberInt(0)
-}
-{ 
-    "_id" : ObjectId("58f6b9b6eec6ba55ae2d4b60"), 
-    "userId" : "58f69c31ad4e3b259c706ee6", 
-    "__v" : NumberInt(0), 
-    "items" : [
-        {
-            "quantity" : NumberInt(3), 
-            "info" : {
-                "_id" : "58efc78c16e26f1a14f0425a", 
-                "title" : "Bibimbap", 
-                "img" : "Pics/bibimbap.jpg", 
-                "price" : "15", 
-                "ingredients" : "Rice, Spinach, Beef, Egg, Carrots, Bean Sprouts", 
-                "__v" : "0"
-            }, 
-            "_id" : ObjectId("58f6bf48f93c283e3404b0da")
-        }
-    ]
-}
-{ 
-    "_id" : ObjectId("58f6ba53eec6ba55ae2d4bb1"), 
-    "userId" : "", 
-    "__v" : NumberInt(0), 
-    "items" : [
-        {
-            "quantity" : NumberInt(2), 
-            "info" : {
-                "_id" : "58efc78c16e26f1a14f0425a", 
-                "title" : "Bibimbap", 
-                "img" : "Pics/bibimbap.jpg", 
-                "price" : "15", 
-                "ingredients" : "Rice, Spinach, Beef, Egg, Carrots, Bean Sprouts", 
-                "__v" : "0"
-            }, 
-            "_id" : ObjectId("58f6bbc4ca00b72fe8ab29db")
-        }
-    ]
-}
-{ 
-    "_id" : ObjectId("58f6bc56ca00b72fe8ab29de"), 
-    "userId" : "58f6bc56ca00b72fe8ab29dd", 
-    "items" : [
-        {
-            "quantity" : NumberInt(10), 
-            "info" : {
-                "_id" : "58efc78c16e26f1a14f0425a", 
-                "title" : "Bibimbap", 
-                "img" : "Pics/bibimbap.jpg", 
-                "price" : "15", 
-                "ingredients" : "Rice, Spinach, Beef, Egg, Carrots, Bean Sprouts", 
-                "__v" : "0"
-            }, 
-            "_id" : ObjectId("58f6be2cca00b72fe8ab29fd")
-        }, 
-        {
-            "quantity" : NumberInt(11), 
-            "info" : {
-                "_id" : "58efc7f316e26f1a14f0425d", 
-                "title" : "Brownie", 
-                "img" : "Pics/brownie.jpg", 
-                "price" : "5", 
-                "ingredients" : "Sugar, Chocolate, Egg", 
-                "__v" : "0"
-            }, 
-            "_id" : ObjectId("58f6be2cca00b72fe8ab29fc")
-        }
-    ], 
-    "__v" : NumberInt(0)
-}
-{ 
-    "_id" : ObjectId("58f6bf95f93c283e3404b0e3"), 
-    "userId" : "58f6bf95f93c283e3404b0e2", 
-    "items" : [
-        {
-            "quantity" : NumberInt(2), 
-            "info" : {
-                "_id" : "58efc78c16e26f1a14f0425a", 
-                "title" : "Bibimbap", 
-                "img" : "Pics/bibimbap.jpg", 
-                "price" : "15", 
-                "ingredients" : "Rice, Spinach, Beef, Egg, Carrots, Bean Sprouts", 
-                "__v" : "0"
-            }, 
-            "_id" : ObjectId("58f6bfa1f93c283e3404b0f7")
-        }, 
-        {
-            "quantity" : NumberInt(2), 
-            "info" : {
-                "_id" : "58efc7be16e26f1a14f0425b", 
-                "title" : "Steak", 
-                "img" : "Pics/steak.jpg", 
-                "price" : "20", 
-                "ingredients" : "Beef", 
-                "__v" : "0"
-            }, 
-            "_id" : ObjectId("58f6bfa1f93c283e3404b0f6")
-        }, 
-        {
-            "quantity" : NumberInt(2), 
-            "info" : {
-                "_id" : "58efc7db16e26f1a14f0425c", 
-                "title" : "Katsudon", 
-                "img" : "Pics/katsudon.jpeg", 
-                "price" : "10", 
-                "ingredients" : "Pork, Rice, Egg, Green Onion", 
-                "__v" : "0"
-            }, 
-            "_id" : ObjectId("58f6bfa1f93c283e3404b0f5")
-        }, 
-        {
-            "quantity" : NumberInt(2), 
-            "info" : {
-                "_id" : "58efc7f316e26f1a14f0425d", 
-                "title" : "Brownie", 
-                "img" : "Pics/brownie.jpg", 
-                "price" : "5", 
-                "ingredients" : "Sugar, Chocolate, Egg", 
-                "__v" : "0"
-            }, 
-            "_id" : ObjectId("58f6bfa1f93c283e3404b0f4")
+            "_id" : ObjectId("59040019b1437e37b0a28294")
         }
     ], 
     "__v" : NumberInt(0)

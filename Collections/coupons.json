@@ -1,0 +1,60 @@
+{ 
+    "_id" : ObjectId("5903f6dc6d0c8711e83a306e"), 
+    "name" : "coupon", 
+    "code" : "123", 
+    "type" : "Percent", 
+    "value" : NumberInt(12), 
+    "enable" : true, 
+    "uses" : NumberInt(1), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5903f6e56d0c8711e83a306f"), 
+    "name" : "couponx", 
+    "code" : "qwe", 
+    "type" : "Flat", 
+    "value" : NumberInt(5), 
+    "enable" : true, 
+    "uses" : NumberInt(16), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5903fe477b28fe3940cf28b0"), 
+    "name" : "cccc", 
+    "code" : "456", 
+    "type" : "Percent", 
+    "value" : NumberInt(2), 
+    "enable" : false, 
+    "uses" : NumberInt(0), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5903fe5a7b28fe3940cf28b2"), 
+    "name" : "coupon", 
+    "code" : "code", 
+    "type" : "Percent", 
+    "value" : NumberInt(23), 
+    "enable" : true, 
+    "uses" : NumberInt(24), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5903fffda41d243b1c82871f"), 
+    "name" : "coupon", 
+    "code" : "code", 
+    "type" : "Percent", 
+    "value" : NumberInt(23), 
+    "enable" : true, 
+    "uses" : NumberInt(24), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("59040019e441a41dd8f7d912"), 
+    "name" : "coupon", 
+    "code" : "code", 
+    "type" : "Percent", 
+    "value" : NumberInt(23), 
+    "enable" : true, 
+    "uses" : NumberInt(24), 
+    "__v" : NumberInt(0)
+}
