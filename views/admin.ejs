@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include head.ejs %>
+
+    <link rel='stylesheet' href="checkoutstyle.css" />
+  </head>
+
+  <body>
+    <!-- header -->
+    <% include header.ejs %>
+
+    <div>
+      <h3>Current Coupons</h3>
+      <table align="center">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Value</th>
+            <th>Code</th>
+            <th>Enabled?</th>
+            <th>Uses Left</th>
+            <th>Enable</th>
+            <th>Disable</th>
+          </tr>
+        </thead>
+
+        <tbody class="current">
+        </tbody>
+
+      </table>
+
+
+      <!-- <div class="update">
+        <button>Update</button>
+      </div> -->
+    </div>
+
+
+    <div class="create">
+      <h3>Create a Coupon</h3>
+      <form>
+        <label>Name</label>
+        <input type="text" name="name" required></br>
+
+        <label>Code</label>
+        <input type="text" name="code" required></br>
+
+        <label>Type</label>
+        <select id="type">
+          <option value="Percent">Percentage</option>
+          <option value="Flat">Flat $ Amount</option>
+          <option value="Bogo">BOGO</option>
+        </select></br>
+
+        <label>Value</label>
+        <input type="number" name="value" required></br>
+
+        <label>Number of Uses</label>
+        <input type="number" name="uses" required></br>
+
+
+        <div id="create">
+          <button>Create</button>
+        </div>
+      </form>
+    </div>
+
+
+
+
+    <script>
+
+    coupons = [];
+
+    // list out all coupons
+    $.ajax({
+      url: "http://localhost:3000/coupons/",
+      type: "GET",
+      success: (function(e) {
+
+        coupons = e;
+
+        var current = $('.current');
+
+
+        for(var i = 0; i < coupons.length; i++){
+            var row = document.createElement("tr");
+
+            var name = document.createElement("td");
+            name.innerHTML = coupons[i].name;
+
+            var type = document.createElement("td");
+            type.innerHTML = coupons[i].type;
+
+            var value = document.createElement("td");
+            value.innerHTML = coupons[i].value;
+
+            var code = document.createElement("td");
+            code.innerHTML = coupons[i].code;
+
+            var enable = document.createElement("td");
+            enable.innerHTML = coupons[i].enable;
+
+            var uses = document.createElement("td");
+            uses.innerHTML = coupons[i].uses;
+
+            var enabled = document.createElement("td");
+            var bu = document.createElement("button");
+            bu.className = "enable " + i;
+            bu.innerHTML = "Enable";
+            enabled.appendChild(bu);
+
+            var disable = document.createElement("td");
+            var b = document.createElement('button');
+            b.className = "disable " + i;
+            b.innerHTML = "Disable";
+            disable.appendChild(b);
+
+
+            row.append(name);
+            row.append(type);
+            row.append(value);
+            row.append(code);
+            row.append(enable);
+            row.append(uses);
+            row.append(enabled);
+            row.append(disable);
+
+            current.append(row);
+        }
+      })
+    })
+
+
+
+    // enable
+    $('body').on('click', ".enable", function(e){
+
+        var str = $(this).attr("class");
+
+        var index = parseInt(str.slice(7, str.length));
+
+        console.log(coupons[index]._id)
+
+        $.ajax({
+          url: "http://localhost:3000/coupons/enable/",
+          type: "POST",
+          data: {
+            _id: coupons[index]._id,
+            enable: true,
+          }
+        })
+
+        window.location.reload();
+
+    })
+
+    // disable
+    $('body').on('click', ".disable", function(e){
+
+        var str = $(this).attr("class");
+
+        var index = parseInt(str.slice(8, str.length));
+
+        console.log(coupons[index]._id)
+
+
+        $.ajax({
+          url: "http://localhost:3000/coupons/enable/",
+          type: "POST",
+          data: {
+            _id: coupons[index]._id,
+            enable: false,
+          }
+        })
+
+        window.location.reload();
+
+    })
+
+
+
+
+    // create new coupon
+    $('body').on('click',"#create", function(e){
+
+      var name = document.querySelector('input[name="name"]').value;
+      var code = document.querySelector('input[name="code"]').value;
+      var sel = document.getElementById("type");
+      var type = sel.options[sel.selectedIndex].value;
+      var value = document.querySelector('input[name="value"]').value;
+      var uses = document.querySelector('input[name="uses"]').value;
+
+      if (name == "" || code == "" || sel =="" || type =="" || value == "" || uses == ""){
+        return false;
+      }
+
+      $.ajax({
+        url: "http://localhost:3000/coupons/",
+        type: "POST",
+        data: {
+          name: name,
+          code: code,
+          type: type,
+          value: value,
+          enable: true,
+          uses: uses
+        },
+        success: (function(e) {
+
+        })
+      })
+
+      if (name != null && code != null && type != null && value != null & uses != null){
+        window.location.reload();
+      } else{
+        return false;
+      }
+    })
+
+
+
+    </script>
+
+  </body>
+
+</html>
