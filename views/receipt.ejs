@@ -142,7 +142,7 @@
                   type: "POST",
                   data: {_id: string},
                   success: function(e){
-                      console.log(e)
+                      //console.log(e)
                       var number = 0;
                       for (var i = 0; i < current.length; i++){
                         number += parseInt(current[i].info.price) * parseInt(current[i].quantity);
@@ -187,7 +187,7 @@
       success: function(e){
 
           var delivery_info = e[e.length-1];
-          console.log(delivery_info);
+          //console.log(delivery_info);
 
           var address = $('.address')
           var name = `${delivery_info.fname} ${delivery_info.lname}`

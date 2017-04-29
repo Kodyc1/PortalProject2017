@@ -4,7 +4,7 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var current = req.session.user;
-  console.log(req.cookies.session)
+  //console.log(req.cookies.session)
 
   if (current){
       res.render('index', { title: 'Food Ordering Website', h1: 'Menu', user: req.session.user});
@@ -53,7 +53,7 @@ router.get('/receipt', function(req,res,next){
 
 router.get('/admin', function(req, res, next) {
   var current = req.session.user;
-  console.log(req.cookies.session)
+  //console.log(req.cookies.session)
 
   if (current){
       res.render('admin', { title: 'Coupons', h1: 'Coupons', user: req.session.user});

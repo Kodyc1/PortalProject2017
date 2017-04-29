@@ -13,7 +13,7 @@ router.delete('/:id', function(req,res){
       console.log(err);
       res.send(err);
     } else{
-      console.log(doc);
+      //console.log(doc);
       res.send("delete request at id")
     }
   });
@@ -23,7 +23,7 @@ router.delete('/:id', function(req,res){
 router.post('/', function(req, res){
   // body of the request
   var body = req.body;
-  console.log(body);
+  //console.log(body);
   // create new menu item with post request
   var newMenu = new MenuModel(body);
   newMenu.save(function(err, doc){
@@ -31,7 +31,7 @@ router.post('/', function(req, res){
       console.log(err);
       res.send(err);
     } else{
-      console.log(doc);
+      //console.log(doc);
       res.json(doc);
     }
   });

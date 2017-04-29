@@ -8,7 +8,7 @@ var router = express.Router();
 router.post('/', function(req, res){
   // body of the request
   var body = req.body;
-  console.log(body);
+  //console.log(body);
   // create new menu item with post request
   var newUser = new UserModel(body);
   newUser.save(function(err, newuser){
@@ -16,7 +16,7 @@ router.post('/', function(req, res){
       console.log(err);
       res.send(err);
     } else{
-      console.log(newuser);
+      //console.log(newuser);
       res.send(newuser._id);
     }
   });

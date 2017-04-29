@@ -23,7 +23,7 @@ router.post('/', function(req, res){
     if(err){
       res.send(err);
     } else{
-      console.log(doc);
+      //console.log(doc);
       res.json(doc);
     }
   })
@@ -53,7 +53,7 @@ router.get('/', function(req,res){
     if(err){
       res.send(err);
     } else{
-      console.log(obj)
+      //console.log(obj)
       res.json(obj);
     }
   })

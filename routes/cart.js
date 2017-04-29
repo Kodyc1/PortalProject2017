@@ -7,7 +7,7 @@ var router = express.Router();
 // create new cart lists
 router.post("/", function(req, res){
   var body = req.body;
-  console.log(body);
+  //console.log(body);
 
   var newCart = new CartModel(body);
   newCart.save(function(err,doc){

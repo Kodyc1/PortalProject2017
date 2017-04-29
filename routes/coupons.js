@@ -63,7 +63,7 @@ router.post("/", function(req,res){
       console.log(err)
       res.send(err);
     } else{
-      console.log(docs)
+      //console.log(docs)
       res.json(docs);
     }
   })
