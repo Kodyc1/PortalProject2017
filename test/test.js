@@ -203,3 +203,96 @@ describe("Add to checkout order list", function(done){
       })
   })
 })
+
+
+
+
+describe("Create a coupon", function(done){
+  it('create a coupon', function(done){
+    request
+      .post(`http://localhost:3000/coupons/`)
+      .send({
+          name: "coupon",
+          code: "code",
+          type: "Percent",
+          value: 23,
+          enable: true,
+          uses: 24
+        })
+      .then(function(err,res){
+        console.log("created new coupon")
+        done();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  })
+})
+
+
+describe("disable a coupon", function(done){
+  it('disables a coupon', function(done){
+    request
+      .post(`http://localhost:3000/coupons/enable/`)
+      .send({
+          _id: "5903e52ea96d5f1308a9adee",
+          enable: false
+        })
+      .then(function(err,res){
+        console.log("created new coupon")
+        done();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  })
+})
+
+
+describe("coupon should fail after X usage", function(done){
+  it('should fail because of no more uses', function(done){
+    request
+      .post(`http://localhost:3000/coupons/code`)
+      .send({
+        code: "456"
+      })
+      .end(function(err, res){
+
+        chai.isOk(res.body.uses <= 0, "Got no more uses left");
+
+        done();
+      })
+  })
+})
+
+
+describe("coupon should fail if disabled", function(done){
+  it('should fail because its disabled', function(done){
+    request
+      .post(`http://localhost:3000/coupons/code`)
+      .send({
+        code: "456"
+      })
+      .end(function(err, res){
+
+        chai.isOk(res.body.enable === false, "Disabled");
+
+        done();
+      })
+  })
+})
+
+describe("discounts are calculated accurately", function(done){
+  it('should return 23% of 100 === 77', function(done){
+    request
+      .post(`http://localhost:3000/coupons/code`)
+      .send({
+        code: "code"
+      })
+      .end(function(err,res){
+        chai.equal((100-res.body.value), 77, "percent reduction");
+
+        done();
+      })
+  })
+})

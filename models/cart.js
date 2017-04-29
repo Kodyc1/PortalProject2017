@@ -8,7 +8,8 @@ var item = {
 
 var schema = {
     userId: String,
-    items: [item],
+    coupon: String,
+    items: [item]
 };
 
 module.exports = mongoose.model('Cart', schema);

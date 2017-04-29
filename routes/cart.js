@@ -59,6 +59,28 @@ router.post("/users", function(req, res){
 });
 
 
+// update cart
+router.post("/coupons", function(req, res){
+  var body = req.body;
+
+  var id = req.session.user._id;
+
+  //console.log(body.items);
+
+  // res.send(body);
+
+  CartModel.findOneAndUpdate( {userId: id},
+                              {coupon: body.coupon} )
+    .then (function(updatedCart){
+      res.json(updatedCart);
+    })
+    .catch (function(err){
+      res.send(err);
+    })
+
+});
+
+
 
 
 router.patch('/:id', function(req, res){

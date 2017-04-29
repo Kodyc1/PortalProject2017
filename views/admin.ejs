@@ -187,7 +187,7 @@
     $('body').on('click',"#create", function(e){
 
       var name = document.querySelector('input[name="name"]').value;
-      var code = document.querySelector('input[name="code"]').value;
+      var code = document.querySelector('input[name="code"]').value.toLowerCase();
       var sel = document.getElementById("type");
       var type = sel.options[sel.selectedIndex].value;
       var value = document.querySelector('input[name="value"]').value;

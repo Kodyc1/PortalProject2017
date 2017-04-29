@@ -27,11 +27,21 @@
       </tbody>
 
       <tfoot>
+        <tr id="subtotal">
+          <td colspan=3>Subtotal</td>
+        </tr>
+        <tr id="tax">
+          <td colspan=3>Tax</td>
+        </tr>
         <tr id="total">
           <td colspan=3>Total</td>
         </tr>
       </tfoot>
     </table>
+
+    <h2>Coupons applied:</h2>
+    <div class="coupon">
+    </div>
 
     <h2>Delivered to:</h2>
     <div class="address">
@@ -41,6 +51,8 @@
   <script>
 
     var current = [];
+
+    var string = "";
 
     $.ajax({
       url: "http://localhost:3000/cart/users/",
@@ -58,6 +70,8 @@
             if (wholecart[j].userId === "<%= user._id%>"){
 
                 current = wholecart[j].items;
+
+                string = wholecart[j].coupon;
 
                 for (var i = 0; i < current.length; i++){
 
@@ -95,20 +109,77 @@
               }
             }
 
+            var subtotal = document.querySelector("#subtotal");
+            var sub = document.createElement("td");
+            sub.id = "sub"
+
             var number = 0;
             for (var i = 0; i < current.length; i++){
               number += parseInt(current[i].info.price) * parseInt(current[i].quantity);
             }
+
+            sub.innerHTML = "$" + (number) + ".00";
+            subtotal.appendChild(sub);
+
+            var tax = document.querySelector("#tax");
+            var t = document.createElement("td");
+            t.id = "t"
             var tnumber = Math.round(.0725*(number)*100)/100;
+            t.innerHTML = "$" + tnumber;
+            tax.appendChild(t);
 
             var total = document.querySelector("#total");
             var tot = document.createElement("td");
+            tot.id =  "tot"
             tot.innerHTML = "$" + (number + tnumber);
             total.appendChild(tot);
 
             $("#cart").html("<a href=\"/carts\">Cart (" + cartNumber + ")<\a>");
+
+            if (string){
+                $.ajax({
+                  url: "http://localhost:3000/coupons/find",
+                  type: "POST",
+                  data: {_id: string},
+                  success: function(e){
+                      console.log(e)
+                      var number = 0;
+                      for (var i = 0; i < current.length; i++){
+                        number += parseInt(current[i].info.price) * parseInt(current[i].quantity);
+                      }
+                      number *= 100/100;
+                      if (e.type === "Percent"){
+                        var multiplier = 100 - e.value;
+                        number = number * (multiplier/100)
+                      }
+                      if (e.type === "Flat"){
+                        number -= e.value;
+                      }
+                      var tnumber = Math.round(.0725*(number)*100)/100;
+                      var tot = (number + tnumber) *100/100;
+                      $("#sub").html("$" + number);
+                      $("#t").html("$" + tnumber);
+                      $("#tot").html("$" + (tot));
+
+
+                      var coupon = $(".coupon");
+                      var msg = ""
+                      if (e.type === "Percent"){
+                          msg = `Coupon: ${e.name} applied, enjoy ${e.value}% off subtotal`;
+                      }
+                      if (e.type === "Flat"){
+                          msg = `Coupon: ${e.name} applied, enjoy $${e.value} off subtotal`;
+                      }
+                      var paragraph = document.createElement("p");
+                      paragraph.append(msg);
+
+                      coupon.append(paragraph);
+                  }
+                })
+            }
       }
     })
+
 
     $.ajax({
       url: "http://localhost:3000/checkout/receipt",
@@ -136,6 +207,12 @@
             url: "http://localhost:3000/cart/users/",
             type: "POST",
             data: {items: []}
+          });
+
+          $.ajax({
+            url:"http://localhost:3000/cart/coupons/",
+            type:"POST",
+            data: {coupon: ""}
           });
 
       }

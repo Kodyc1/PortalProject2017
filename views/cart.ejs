@@ -38,7 +38,7 @@
     </table>
 
     <div class="coupon">
-      Enter coupon code: <input type="username">
+
     </div>
 
     <div class="button">
@@ -50,14 +50,14 @@
 
     <script>
 
-
       var current = [];
+
+      var string = "";
 
       $.ajax({
           url: "http://localhost:3000/cart/users/",
           type: "GET",
           success: function(e){
-
 
               var wholecart = e;
 
@@ -70,6 +70,8 @@
                 if (wholecart[j].userId === "<%= user._id%>"){
 
                     current = wholecart[j].items;
+
+                    string = wholecart[j].coupon;
 
                     for (var i = 0; i < current.length; i++){
 
@@ -142,9 +144,102 @@
               //console.log(cartNumber);
               $("#cart").html("<a href=\"/carts\">Cart (" + cartNumber + ")<\a>");
 
-          }
+              if (string){
+                  $(".coupon").html("Coupon Applied<button id=\"remove\">Remove</button>");
 
+                  $.ajax({
+                    url: "http://localhost:3000/coupons/find",
+                    type: "POST",
+                    data: {_id: string},
+                    success: function(e){
+                      console.log(e)
+                      var number = 0;
+                      for (var i = 0; i < current.length; i++){
+                        number += parseInt(current[i].info.price) * parseInt(current[i].quantity);
+                      }
+                      number *= 100/100;
+                      if (e.type === "Percent"){
+                        var multiplier = 100 - e.value;
+                        number = number * (multiplier/100)
+                      }
+                      if (e.type === "Flat"){
+                        number -= e.value;
+                      }
+                      var tnumber = Math.round(.0725*(number)*100)/100;
+                      var tot = (number + tnumber) *100/100;
+                      $("#sub").html("$" + number);
+                      $("#t").html("$" + tnumber);
+                      $("#tot").html("$" + (tot));
+                    }
+                  })
+
+              } else{
+                  $('.coupon').html("Enter coupon code: <input type=\"code\"><button id=\"apply\">Apply</button>");
+              }
+          }
       });
+
+
+
+      $('.coupon').on('click', '#apply', function(e){
+        var code = document.querySelector('input[type="code"]').value.toLowerCase();
+        coupon = "";
+        $.ajax({
+          url: "http://localhost:3000/coupons/code",
+          type: "POST",
+          data: {code: code},
+          success: function(e){
+            coupon = e
+            if (e.uses <= 0){
+                alert("coupon out of uses");
+            }
+            else if (e.enable == false){
+                alert("coupon been disabled");
+            }
+            else{
+              $.ajax({
+                url: "http://localhost:3000/coupons/uses/",
+                type: "POST",
+                data: {_id: e._id, uses: e.uses-1}
+              })
+
+              $.ajax({
+                url:"http://localhost:3000/cart/coupons/",
+                type:"POST",
+                data: {coupon: coupon._id}
+              })
+            }
+            window.location.reload();
+          }
+        })
+      })
+
+      $('.coupon').on('click', '#remove', function(e){
+        $.ajax({
+          url: "http://localhost:3000/coupons/find",
+          type: "POST",
+          data: {_id: string},
+          success: function(e){
+            coupon = e
+
+            $.ajax({
+              url: "http://localhost:3000/coupons/uses/",
+              type: "POST",
+              data: {_id: e._id, uses: e.uses+1}
+            })
+
+            $.ajax({
+              url:"http://localhost:3000/cart/coupons/",
+              type:"POST",
+              data: {coupon: ""}
+            })
+
+            window.location.reload();
+          }
+        })
+      })
+
+
 
 
       $('.checkout').on('click', '#checkout', function(e){

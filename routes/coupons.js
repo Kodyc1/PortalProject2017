@@ -19,6 +19,41 @@ router.get('/', function(req, res){
 });
 
 
+router.post('/code', function(req, res){
+  // get/find all cart items
+  var body = req.body;
+  CouponModel.findOne({code: req.body.code}, function(err,coupon){
+    if (err){
+      res.send(false);
+    }
+    else{
+      if (!coupon){
+        res.send(false);
+      }else{
+        res.send(coupon);
+      }
+    }
+  })
+});
+
+
+router.post('/find', function(req, res){
+  // get/find all cart items
+  var body = req.body;
+  CouponModel.findOne({_id: body._id}, function(err,coupon){
+    if (err){
+      res.send(false);
+    }
+    else{
+      if (!coupon){
+        res.send(false);
+      }else{
+        res.send(coupon);
+      }
+    }
+  })
+});
+
 router.post("/", function(req,res){
   var body = req.body;
 
@@ -39,6 +74,19 @@ router.post("/enable", function(req,res){
   var body = req.body;
 
   CouponModel.findOneAndUpdate({_id: body._id}, {enable: body.enable})
+  .then(function(updatedCoupon){
+    res.json(updatedCart);
+    done();
+  })
+  .catch(function(err){
+    res.send(err);
+  })
+})
+
+router.post("/uses", function(req,res){
+  var body = req.body;
+
+  CouponModel.findOneAndUpdate({_id: body._id}, {uses: body.uses})
   .then(function(updatedCoupon){
     res.json(updatedCart);
     done();
